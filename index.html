@@ -776,19 +776,40 @@
             <i class="fa fa-home ml-2"></i>
           </button>
         </div>
+
+        <!-- 优惠券页面 (默认隐藏) -->
+        <div id="coupon-page" class="hidden p-4">
+          <div class="flex items-center mb-4">
+            <h2 class="text-xl font-bold">我的优惠券</h2>
+          </div>
+          
+          <!-- 优惠券列表 -->
+          <div id="my-coupons" class="space-y-4">
+            <!-- 优惠券将通过JavaScript动态添加 -->
+          </div>
+          
+          <!-- 获取优惠券按钮 -->
+          <button onclick="showCouponModal()" class="mt-6 bg-primary text-white p-3 rounded-full shadow-lg hover:bg-opacity-90">
+            <i class="fa fa-plus"></i> 获取优惠券
+          </button>
+        </div>
       </main>
       
       <!-- 底部导航栏 -->
       <footer class="bg-white shadow-[0_-2px_10px_rgba(0,0,0,0.05)] py-2">
         <div class="container mx-auto px-4">
           <div class="flex justify-around">
-            <a href="#" class="nav-link flex flex-col items-center text-primary">
+            <a href="#" class="nav-link flex flex-col items-center text-primary" id="home-nav">
               <i class="fa fa-cutlery text-xl"></i>
               <span class="text-xs mt-1">菜单</span>
             </a>
             <a href="#" class="nav-link flex flex-col items-center text-gray-500 hover:text-primary transition-colors" id="cart-nav">
               <i class="fa fa-shopping-cart text-xl"></i>
               <span class="text-xs mt-1">购物车</span>
+            </a>
+            <a href="#" class="nav-link flex flex-col items-center text-gray-500 hover:text-primary transition-colors" id="coupon-nav">
+              <i class="fa fa-ticket text-xl"></i>
+              <span class="text-xs mt-1">优惠券</span>
             </a>
           </div>
         </div>
@@ -2179,6 +2200,117 @@
     function closeDaddyModal() {
       document.getElementById('daddyModal').classList.add('hidden');
     }
+
+    // 显示菜单页面
+    function showMenuPage() {
+      document.getElementById('menu-page').classList.remove('hidden');
+      document.getElementById('cart-page').classList.add('hidden');
+      document.getElementById('coupon-page').classList.add('hidden');
+      
+      // 更新导航按钮状态
+      document.getElementById('home-nav').classList.add('text-primary');
+      document.getElementById('home-nav').classList.remove('text-gray-500');
+      document.getElementById('cart-nav').classList.add('text-gray-500');
+      document.getElementById('cart-nav').classList.remove('text-primary');
+      document.getElementById('coupon-nav').classList.add('text-gray-500');
+      document.getElementById('coupon-nav').classList.remove('text-primary');
+    }
+
+    // 显示购物车页面
+    function showCartPage() {
+      document.getElementById('menu-page').classList.add('hidden');
+      document.getElementById('cart-page').classList.remove('hidden');
+      document.getElementById('coupon-page').classList.add('hidden');
+      
+      // 更新导航按钮状态
+      document.getElementById('home-nav').classList.add('text-gray-500');
+      document.getElementById('home-nav').classList.remove('text-primary');
+      document.getElementById('cart-nav').classList.add('text-primary');
+      document.getElementById('cart-nav').classList.remove('text-gray-500');
+      document.getElementById('coupon-nav').classList.add('text-gray-500');
+      document.getElementById('coupon-nav').classList.remove('text-primary');
+      
+      // 更新购物车内容
+      updateCart();
+    }
+
+    // 显示优惠券页面
+    function showCouponPage() {
+      document.getElementById('menu-page').classList.add('hidden');
+      document.getElementById('cart-page').classList.add('hidden');
+      document.getElementById('coupon-page').classList.remove('hidden');
+      
+      // 更新导航按钮状态
+      document.getElementById('home-nav').classList.add('text-gray-500');
+      document.getElementById('home-nav').classList.remove('text-primary');
+      document.getElementById('cart-nav').classList.add('text-gray-500');
+      document.getElementById('cart-nav').classList.remove('text-primary');
+      document.getElementById('coupon-nav').classList.add('text-primary');
+      document.getElementById('coupon-nav').classList.remove('text-gray-500');
+      
+      // 更新优惠券列表
+      updateMyCoupons();
+    }
+
+    // 更新我的优惠券列表
+    function updateMyCoupons() {
+      const coupons = JSON.parse(localStorage.getItem('coupons') || '[]');
+      const myCouponsContainer = document.getElementById('my-coupons');
+      
+      if (coupons.length === 0) {
+        myCouponsContainer.innerHTML = `
+          <div class="text-center py-8">
+            <i class="fa fa-ticket text-4xl text-gray-300 mb-4"></i>
+            <p class="text-gray-500">暂无优惠券</p>
+            <button onclick="showCouponModal()" class="mt-4 bg-primary text-white px-6 py-2 rounded-full hover:bg-opacity-90">
+              获取优惠券
+            </button>
+          </div>
+        `;
+        return;
+      }
+      
+      myCouponsContainer.innerHTML = coupons.map(coupon => `
+        <div class="coupon-card ${coupon.used ? 'opacity-50' : ''}">
+          <div class="flex justify-between items-center">
+            <div>
+              <div class="coupon-discount">${(coupon.discount * 10).toFixed(0)}折优惠券</div>
+              <div class="coupon-condition">${coupon.condition}</div>
+              <div class="text-sm text-gray-500 mt-2">有效期至：${new Date(coupon.expiryDate).toLocaleDateString()}</div>
+            </div>
+            ${!coupon.used ? `
+              <button onclick="useCoupon(${coupon.discount})" class="bg-primary text-white px-4 py-2 rounded-full hover:bg-opacity-90">
+                使用
+              </button>
+            ` : `
+              <span class="text-gray-500">已使用</span>
+            `}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // 页面加载完成后初始化
+    document.addEventListener('DOMContentLoaded', function() {
+      // 添加导航按钮点击事件
+      document.getElementById('home-nav').addEventListener('click', function(e) {
+        e.preventDefault();
+        showMenuPage();
+      });
+      
+      document.getElementById('cart-nav').addEventListener('click', function(e) {
+        e.preventDefault();
+        showCartPage();
+      });
+      
+      document.getElementById('coupon-nav').addEventListener('click', function(e) {
+        e.preventDefault();
+        showCouponPage();
+      });
+      
+      // 显示菜单页面
+      showMenuPage();
+    });
   </script>
 </body>
 </html>
