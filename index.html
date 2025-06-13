@@ -327,6 +327,38 @@
         text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
         z-index: 2;
     }
+
+    /* 优惠券样式 */
+    .coupon-card {
+        border: 2px dashed #FF5722;
+        border-radius: 8px;
+        padding: 15px;
+        margin: 10px 0;
+        background: rgba(255, 87, 34, 0.05);
+        transition: all 0.3s ease;
+    }
+
+    .coupon-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 15px rgba(255, 87, 34, 0.2);
+    }
+
+    .coupon-card.selected {
+        background: rgba(255, 87, 34, 0.1);
+        border-style: solid;
+    }
+
+    .coupon-discount {
+        font-size: 24px;
+        font-weight: bold;
+        color: #FF5722;
+    }
+
+    .coupon-condition {
+        font-size: 14px;
+        color: #666;
+        margin-top: 5px;
+    }
   </style>
 </head>
 
@@ -811,6 +843,196 @@
     </div>
   </div>
   
+  <!-- 优惠券模态框 -->
+  <div id="couponModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+    <div class="bg-white rounded-lg p-6 w-96 max-w-full mx-4">
+      <h3 class="text-xl font-bold mb-4">获取优惠券</h3>
+      <div class="space-y-4">
+        <div class="coupon-card" data-discount="0.5" data-duration="30">
+          <div class="flex justify-between items-center">
+            <div>
+              <div class="coupon-discount">5折优惠券</div>
+              <div class="coupon-condition">按摩30分钟即可获得</div>
+            </div>
+            <button class="bg-primary text-white px-4 py-2 rounded-full hover:bg-opacity-90" onclick="getCoupon(0.5, 30)">
+              获取
+            </button>
+          </div>
+        </div>
+        <div class="coupon-card" data-discount="0.7" data-duration="20">
+          <div class="flex justify-between items-center">
+            <div>
+              <div class="coupon-discount">7折优惠券</div>
+              <div class="coupon-condition">按摩20分钟即可获得</div>
+            </div>
+            <button class="bg-primary text-white px-4 py-2 rounded-full hover:bg-opacity-90" onclick="getCoupon(0.7, 20)">
+              获取
+            </button>
+          </div>
+        </div>
+        <div class="coupon-card" data-discount="0.8" data-duration="10">
+          <div class="flex justify-between items-center">
+            <div>
+              <div class="coupon-discount">8折优惠券</div>
+              <div class="coupon-condition">按摩10分钟即可获得</div>
+            </div>
+            <button class="bg-primary text-white px-4 py-2 rounded-full hover:bg-opacity-90" onclick="getCoupon(0.8, 10)">
+              获取
+            </button>
+          </div>
+        </div>
+        <div class="coupon-card" data-discount="0.9">
+          <div class="flex justify-between items-center">
+            <div>
+              <div class="coupon-discount">9折优惠券</div>
+              <div class="coupon-condition">叫一声爸爸即可获得</div>
+            </div>
+            <button class="bg-primary text-white px-4 py-2 rounded-full hover:bg-opacity-90" onclick="getDaddyCoupon()">
+              获取
+            </button>
+          </div>
+        </div>
+      </div>
+      <button class="mt-4 w-full bg-gray-200 text-gray-700 px-4 py-2 rounded-full hover:bg-gray-300" onclick="closeCouponModal()">
+        关闭
+      </button>
+    </div>
+  </div>
+
+  <!-- 叫爸爸模态框 -->
+  <div id="daddyModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+    <div class="bg-white rounded-lg p-6 w-96 max-w-full mx-4 text-center">
+      <h3 class="text-xl font-bold mb-4">获取9折优惠券</h3>
+      <p class="text-gray-600 mb-4">请对着麦克风叫一声"爸爸"</p>
+      <button id="startRecordingBtn" class="bg-primary text-white px-6 py-2 rounded-full hover:bg-opacity-90">
+        开始录音
+      </button>
+      <button id="stopRecordingBtn" class="hidden mt-2 bg-gray-200 text-gray-700 px-6 py-2 rounded-full hover:bg-gray-300">
+        停止录音
+      </button>
+      <button onclick="closeDaddyModal()" class="mt-4 w-full bg-gray-200 text-gray-700 px-4 py-2 rounded-full hover:bg-gray-300">
+        取消
+      </button>
+    </div>
+  </div>
+
+  <!-- 按摩计时器模态框 -->
+  <div id="massageTimerModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+    <div class="bg-white rounded-lg p-6 w-96 max-w-full mx-4 text-center relative">
+      <button onclick="stopMassage()" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
+        <i class="fa fa-times text-xl"></i>
+      </button>
+      <h3 class="text-xl font-bold mb-4">按摩计时</h3>
+      <div class="text-4xl font-bold text-primary mb-4" id="massageTimer">00:00</div>
+      <div class="text-gray-600 mb-4">请为缪大厨按摩 <span id="massageDuration">0</span> 分钟</div>
+      <button id="startMassageBtn" class="bg-primary text-white px-6 py-2 rounded-full hover:bg-opacity-90">
+        开始按摩
+      </button>
+      <button id="stopMassageBtn" class="hidden mt-2 bg-gray-200 text-gray-700 px-6 py-2 rounded-full hover:bg-gray-300">
+        停止按摩
+      </button>
+    </div>
+  </div>
+
+  <!-- 优惠券展示区域 -->
+  <div class="fixed bottom-20 right-4 z-40">
+    <button onclick="showCouponModal()" class="bg-primary text-white p-3 rounded-full shadow-lg hover:bg-opacity-90">
+      <i class="fa fa-ticket"></i>
+    </button>
+  </div>
+
+  <!-- 优惠券列表 -->
+  <div id="couponList" class="fixed bottom-20 right-16 z-40 bg-white rounded-lg shadow-lg p-4 w-64 hidden">
+    <h4 class="font-bold mb-2">我的优惠券</h4>
+    <div id="availableCoupons" class="space-y-2">
+      <!-- 优惠券将通过JavaScript动态添加 -->
+    </div>
+  </div>
+
+  <style>
+    /* 优惠券样式 */
+    .coupon-card {
+      border: 2px dashed #FF5722;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 10px 0;
+      background: rgba(255, 87, 34, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    .coupon-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 15px rgba(255, 87, 34, 0.2);
+    }
+
+    .coupon-card.selected {
+      background: rgba(255, 87, 34, 0.1);
+      border-style: solid;
+    }
+
+    .coupon-discount {
+      font-size: 24px;
+      font-weight: bold;
+      color: #FF5722;
+    }
+
+    .coupon-condition {
+      font-size: 14px;
+      color: #666;
+      margin-top: 5px;
+    }
+  </style>
+
+  <!-- 结算页面 -->
+  <div id="checkoutPage" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+    <div class="bg-white h-full w-full md:w-96 md:ml-auto p-6 overflow-y-auto">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold">订单结算</h2>
+        <button onclick="closeCheckout()" class="text-gray-500 hover:text-gray-700">
+          <i class="fa fa-times text-xl"></i>
+        </button>
+      </div>
+      
+      <!-- 订单商品列表 -->
+      <div class="space-y-4 mb-6">
+        <div id="checkoutItems" class="space-y-4">
+          <!-- 订单商品将通过JavaScript动态添加 -->
+        </div>
+      </div>
+
+      <!-- 优惠券选择区域 -->
+      <div class="mb-6">
+        <h3 class="font-bold mb-2">选择优惠券</h3>
+        <div id="checkoutCoupons" class="space-y-2">
+          <div class="text-gray-500 text-sm">暂无可用优惠券</div>
+        </div>
+        <button onclick="showCouponModal()" class="mt-2 text-primary hover:text-opacity-80 text-sm">
+          <i class="fa fa-plus"></i> 获取更多优惠券
+        </button>
+      </div>
+      
+      <!-- 订单总计 -->
+      <div class="border-t pt-4">
+        <div class="flex justify-between items-center mb-2">
+          <span class="text-gray-600">商品总额</span>
+          <span id="subtotalPrice">¥0.00</span>
+        </div>
+        <div class="flex justify-between items-center mb-2" id="discountRow" style="display: none;">
+          <span class="text-gray-600">优惠金额</span>
+          <span id="discountAmount" class="text-primary">-¥0.00</span>
+        </div>
+        <div class="flex justify-between items-center text-lg font-bold">
+          <span>总计</span>
+          <span id="totalPrice" class="text-primary">¥0.00</span>
+        </div>
+      </div>
+
+      <button onclick="submitOrder()" class="w-full bg-primary text-white py-3 rounded-full mt-6 hover:bg-opacity-90">
+        提交订单
+      </button>
+    </div>
+  </div>
+
   <script>
     // 全局数据
     let isLoggedIn = false; // 登录状态
@@ -1729,6 +1951,233 @@
             console.error('登录错误:', error);
             alert('登录失败，请稍后重试');
         });
+    }
+
+    // 优惠券相关变量
+    let availableCoupons = [];
+    let selectedCoupon = null;
+    let massageTimer = null;
+    let massageStartTime = null;
+    let massageDuration = 0;
+
+    // 显示优惠券模态框
+    function showCouponModal() {
+      document.getElementById('couponModal').classList.remove('hidden');
+    }
+
+    // 关闭优惠券模态框
+    function closeCouponModal() {
+      document.getElementById('couponModal').classList.add('hidden');
+    }
+
+    // 获取优惠券
+    function getCoupon(discount, duration) {
+      massageDuration = duration;
+      document.getElementById('massageDuration').textContent = duration;
+      document.getElementById('couponModal').classList.add('hidden');
+      document.getElementById('massageTimerModal').classList.remove('hidden');
+      document.getElementById('startMassageBtn').classList.remove('hidden');
+      document.getElementById('stopMassageBtn').classList.add('hidden');
+      document.getElementById('massageTimer').textContent = '00:00';
+    }
+
+    // 开始按摩计时
+    function startMassage() {
+      massageStartTime = Date.now();
+      document.getElementById('startMassageBtn').classList.add('hidden');
+      document.getElementById('stopMassageBtn').classList.remove('hidden');
+      
+      massageTimer = setInterval(() => {
+        const elapsed = Math.floor((Date.now() - massageStartTime) / 1000);
+        const minutes = Math.floor(elapsed / 60);
+        const seconds = elapsed % 60;
+        document.getElementById('massageTimer').textContent = 
+          `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        
+        if (minutes >= massageDuration) {
+          completeMassage();
+        }
+      }, 1000);
+    }
+
+    // 停止按摩
+    function stopMassage() {
+      clearInterval(massageTimer);
+      document.getElementById('massageTimerModal').classList.add('hidden');
+    }
+
+    // 完成按摩
+    function completeMassage() {
+      clearInterval(massageTimer);
+      document.getElementById('massageTimerModal').classList.add('hidden');
+      
+      // 添加优惠券
+      const discount = parseFloat(document.querySelector(`[data-duration="${massageDuration}"]`).dataset.discount);
+      const coupon = {
+        id: Date.now(),
+        discount: discount,
+        used: false
+      };
+      availableCoupons.push(coupon);
+      updateCouponList();
+      
+      // 显示成功提示
+      alert(`恭喜获得${discount * 10}折优惠券！`);
+    }
+
+    // 更新优惠券列表
+    function updateCouponList() {
+      const couponList = document.getElementById('couponList');
+      const availableCouponsDiv = document.getElementById('availableCoupons');
+      availableCouponsDiv.innerHTML = '';
+      
+      if (availableCoupons.length > 0) {
+        couponList.classList.remove('hidden');
+        availableCoupons.forEach(coupon => {
+          if (!coupon.used) {
+            const couponElement = document.createElement('div');
+            couponElement.className = `coupon-card ${selectedCoupon?.id === coupon.id ? 'selected' : ''}`;
+            couponElement.innerHTML = `
+              <div class="flex justify-between items-center">
+                <div class="coupon-discount">${coupon.discount * 10}折优惠券</div>
+                <button class="bg-primary text-white px-3 py-1 rounded-full text-sm" 
+                        onclick="selectCoupon(${coupon.id})">
+                  使用
+                </button>
+              </div>
+            `;
+            availableCouponsDiv.appendChild(couponElement);
+          }
+        });
+      } else {
+        couponList.classList.add('hidden');
+      }
+    }
+
+    // 选择优惠券
+    function selectCoupon(couponId) {
+      selectedCoupon = availableCoupons.find(c => c.id === couponId);
+      updateCouponList();
+      updateTotalPrice(); // 更新总价
+    }
+
+    // 修改计算总价的函数
+    function updateTotalPrice() {
+      let total = 0;
+      orderItems.forEach(item => {
+        total += item.price * item.quantity;
+      });
+      
+      // 应用优惠券折扣
+      if (selectedCoupon) {
+        total = total * selectedCoupon.discount;
+      }
+      
+      document.getElementById('totalPrice').textContent = total.toFixed(2);
+    }
+
+    // 修改提交订单函数
+    function submitOrder() {
+      if (orderItems.length === 0) {
+        alert('请先添加商品到购物车！');
+        return;
+      }
+      
+      // 使用优惠券
+      if (selectedCoupon) {
+        selectedCoupon.used = true;
+        selectedCoupon = null;
+        updateCouponList();
+      }
+      
+      // 原有的提交订单逻辑
+      // ... existing code ...
+    }
+
+    // 添加事件监听器
+    document.getElementById('startMassageBtn').addEventListener('click', startMassage);
+    document.getElementById('stopMassageBtn').addEventListener('click', stopMassage);
+
+    // 修改显示结算页面的函数
+    function showCheckout() {
+      document.getElementById('checkoutPage').classList.remove('hidden');
+      updateCheckoutItems();
+      updateCheckoutCoupons();
+      updateCheckoutPrices();
+    }
+
+    // 更新结算页面的优惠券列表
+    function updateCheckoutCoupons() {
+      const checkoutCoupons = document.getElementById('checkoutCoupons');
+      const availableCoupons = availableCoupons.filter(coupon => !coupon.used);
+      
+      if (availableCoupons.length === 0) {
+        checkoutCoupons.innerHTML = '<div class="text-gray-500 text-sm">暂无可用优惠券</div>';
+        return;
+      }
+
+      checkoutCoupons.innerHTML = availableCoupons.map(coupon => `
+        <div class="coupon-card ${selectedCoupon?.id === coupon.id ? 'selected' : ''}" 
+             onclick="selectCoupon(${coupon.id})">
+          <div class="flex justify-between items-center">
+            <div class="coupon-discount">${coupon.discount * 10}折优惠券</div>
+            <i class="fa fa-check text-primary ${selectedCoupon?.id === coupon.id ? '' : 'hidden'}"></i>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // 更新结算页面的价格显示
+    function updateCheckoutPrices() {
+      let subtotal = 0;
+      orderItems.forEach(item => {
+        subtotal += item.price * item.quantity;
+      });
+      
+      document.getElementById('subtotalPrice').textContent = `¥${subtotal.toFixed(2)}`;
+      
+      const discountRow = document.getElementById('discountRow');
+      const discountAmount = document.getElementById('discountAmount');
+      const totalPrice = document.getElementById('totalPrice');
+      
+      if (selectedCoupon) {
+        const discount = subtotal * (1 - selectedCoupon.discount);
+        discountRow.style.display = 'flex';
+        discountAmount.textContent = `-¥${discount.toFixed(2)}`;
+        totalPrice.textContent = `¥${(subtotal - discount).toFixed(2)}`;
+      } else {
+        discountRow.style.display = 'none';
+        totalPrice.textContent = `¥${subtotal.toFixed(2)}`;
+      }
+    }
+
+    // 修改选择优惠券的函数
+    function selectCoupon(couponId) {
+      selectedCoupon = availableCoupons.find(c => c.id === couponId);
+      updateCouponList();
+      updateCheckoutCoupons();
+      updateCheckoutPrices();
+    }
+
+    // 修改关闭结算页面的函数
+    function closeCheckout() {
+      document.getElementById('checkoutPage').classList.add('hidden');
+    }
+
+    // 获取爸爸优惠券
+    function getDaddyCoupon() {
+      const coupon = {
+        id: Date.now(),
+        discount: 0.9,
+        used: false
+      };
+      availableCoupons.push(coupon);
+      updateCouponList();
+      alert('恭喜获得9折优惠券！');
+    }
+
+    function closeDaddyModal() {
+      document.getElementById('daddyModal').classList.add('hidden');
     }
   </script>
 </body>
