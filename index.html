@@ -972,10 +972,16 @@
             </div>
           </div>
           
-          <button id="back-to-home-btn" class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-3 px-6 rounded-lg transition-all duration-300 ease-in-out btn-hover flex justify-center items-center">
-            返回首页
-            <i class="fa fa-home ml-2"></i>
-          </button>
+          <div class="flex space-x-3">
+            <button id="back-to-home-btn" class="flex-1 bg-primary hover:bg-primary/90 text-white font-medium py-3 px-6 rounded-lg transition-all duration-300 ease-in-out btn-hover flex justify-center items-center">
+              返回首页
+              <i class="fa fa-home ml-2"></i>
+            </button>
+            <button id="delete-order-btn" class="flex-1 bg-red-500 hover:bg-red-600 text-white font-medium py-3 px-6 rounded-lg transition-all duration-300 ease-in-out btn-hover flex justify-center items-center">
+              删除订单
+              <i class="fa fa-trash ml-2"></i>
+            </button>
+          </div>
         </div>
 
         <!-- 优惠券页面 (默认隐藏) -->
@@ -3421,9 +3427,14 @@
                 <span class="text-gray-500">状态:</span>
                 <span class="text-green-500">已完成</span>
               </div>
-              <button class="bg-primary/10 hover:bg-primary/20 text-primary px-4 py-2 rounded-lg transition-all" onclick="viewOrderDetail(${index})">
-                查看详情
-              </button>
+              <div class="flex space-x-2">
+                <button class="bg-primary/10 hover:bg-primary/20 text-primary px-4 py-2 rounded-lg transition-all" onclick="viewOrderDetail(${index})">
+                  查看详情
+                </button>
+                <button class="bg-red-100 hover:bg-red-200 text-red-500 px-4 py-2 rounded-lg transition-all" onclick="deleteCompletedOrder(${index})">
+                  删除
+                </button>
+              </div>
             </div>
           </div>
         `;
@@ -3439,6 +3450,7 @@
       
       // 设置当前订单
       currentOrder = order;
+      currentOrder.index = index; // 保存索引，用于删除操作
       
       // 显示订单详情页面
       switchToPage('orderDetail');
@@ -3459,6 +3471,22 @@
       } catch (error) {
         console.error('加载已完成订单失败:', error);
         completedOrders = [];
+      }
+    }
+    
+    // 删除已完成订单
+    function deleteCompletedOrder(index) {
+      if (confirm('确定要删除这个订单吗？删除后将无法恢复。')) {
+        completedOrders.splice(index, 1);
+        saveCompletedOrders();
+        updateOrdersList();
+        showToast('已删除订单');
+        
+        // 如果删除后没有订单了，显示空状态
+        if (completedOrders.length === 0) {
+          document.getElementById('orders-list').classList.add('hidden');
+          document.getElementById('empty-orders').classList.remove('hidden');
+        }
       }
     }
 
@@ -3552,6 +3580,19 @@
       
       document.getElementById('go-to-menu-from-empty-orders').addEventListener('click', function() {
         switchToPage('menu');
+      });
+      
+      // 添加删除订单按钮事件
+      document.getElementById('delete-order-btn').addEventListener('click', function() {
+        if (currentOrder && currentOrder.index !== undefined) {
+          if (confirm('确定要删除这个订单吗？删除后将无法恢复。')) {
+            completedOrders.splice(currentOrder.index, 1);
+            saveCompletedOrders();
+            showToast('已删除订单');
+            switchToPage('orders');
+            updateOrdersList();
+          }
+        }
       });
       
       // 加载待结算订单和已完成订单
