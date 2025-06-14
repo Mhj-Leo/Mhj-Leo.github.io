@@ -139,225 +139,322 @@
           transform: translate(-50%, -50%) scale(0.8);
         }
       }
-    }
 
-    /* 登录成功动画 */
-    @keyframes ripple {
-        0% {
-            transform: scale(0);
-            opacity: 0.8;
-        }
-        100% {
-            transform: scale(2);
-            opacity: 0;
-        }
-    }
+      /* 登录成功动画 */
+      @keyframes ripple {
+          0% {
+              transform: scale(0);
+              opacity: 0.8;
+          }
+          100% {
+              transform: scale(2);
+              opacity: 0;
+          }
+      }
 
-    @keyframes welcomeText {
-        0% {
-            transform: translateY(20px);
-            opacity: 0;
-        }
-        100% {
-            transform: translateY(0);
-            opacity: 1;
-        }
-    }
+      @keyframes welcomeText {
+          0% {
+              transform: translateY(20px);
+              opacity: 0;
+          }
+          100% {
+              transform: translateY(0);
+              opacity: 1;
+          }
+      }
 
-    @keyframes iconRotate {
-        0% {
-            transform: rotate(-180deg) scale(0);
-            opacity: 0;
-        }
-        100% {
-            transform: rotate(0) scale(1);
-            opacity: 1;
-        }
-    }
+      @keyframes iconRotate {
+          0% {
+              transform: rotate(-180deg) scale(0);
+              opacity: 0;
+          }
+          100% {
+              transform: rotate(0) scale(1);
+              opacity: 1;
+          }
+      }
 
-    @keyframes backgroundShift {
-        0% {
-            background-position: 0% 50%;
-        }
-        50% {
-            background-position: 100% 50%;
-        }
-        100% {
-            background-position: 0% 50%;
-        }
-    }
+      @keyframes backgroundShift {
+          0% {
+              background-position: 0% 50%;
+          }
+          50% {
+              background-position: 100% 50%;
+          }
+          100% {
+              background-position: 0% 50%;
+          }
+      }
 
-    .login-success {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        background: linear-gradient(135deg, #ff6b6b, #ff8e8e, #ffb6b6);
-        background-size: 400% 400%;
-        animation: backgroundShift 8s ease infinite;
-        z-index: 9999;
-        overflow: hidden;
-    }
+      .login-success {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          background: linear-gradient(135deg, #ff6b6b, #ff8e8e, #ffb6b6);
+          background-size: 400% 400%;
+          animation: backgroundShift 8s ease infinite;
+          z-index: 9999;
+          overflow: hidden;
+      }
 
-    .login-success::before {
-        content: '';
-        position: absolute;
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.1);
-        animation: ripple 2s ease-out infinite;
-        box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-    }
+      .login-success::before {
+          content: '';
+          position: absolute;
+          width: 150px;
+          height: 150px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.1);
+          animation: ripple 2s ease-out infinite;
+          box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+      }
 
-    .login-success::after {
-        content: '';
-        position: absolute;
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.1);
-        animation: ripple 2s ease-out 1s infinite;
-        box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-    }
+      .login-success::after {
+          content: '';
+          position: absolute;
+          width: 150px;
+          height: 150px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.1);
+          animation: ripple 2s ease-out 1s infinite;
+          box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+      }
 
-    .login-success-icon {
-        font-size: 80px;
-        color: white;
-        margin-bottom: 20px;
-        animation: iconRotate 1s ease-out;
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-    }
+      .login-success-icon {
+          font-size: 80px;
+          color: white;
+          margin-bottom: 20px;
+          animation: iconRotate 1s ease-out;
+          text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+      }
 
-    .login-success-text {
-        font-size: 28px;
-        color: white;
-        text-align: center;
-        animation: welcomeText 1s ease-out;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        font-weight: 500;
-    }
+      .login-success-text {
+          font-size: 28px;
+          color: white;
+          text-align: center;
+          animation: welcomeText 1s ease-out;
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          font-weight: 500;
+      }
 
-    .login-success-subtext {
-        font-size: 16px;
-        color: rgba(255, 255, 255, 0.9);
-        margin-top: 10px;
-        animation: welcomeText 1s ease-out 0.3s backwards;
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    }
+      .login-success-subtext {
+          font-size: 16px;
+          color: rgba(255, 255, 255, 0.9);
+          margin-top: 10px;
+          animation: welcomeText 1s ease-out 0.3s backwards;
+          text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+      }
 
-    /* 登录成功动画 */
-    @keyframes heartBeat {
-        0% {
-            transform: scale(0.8);
-            opacity: 0;
-        }
-        50% {
-            transform: scale(1.2);
-            opacity: 1;
-        }
-        100% {
-            transform: scale(1);
-            opacity: 0.8;
-        }
-    }
+      /* 登录成功动画 */
+      @keyframes heartBeat {
+          0% {
+              transform: scale(0.8);
+              opacity: 0;
+          }
+          50% {
+              transform: scale(1.2);
+              opacity: 1;
+          }
+          100% {
+              transform: scale(1);
+              opacity: 0.8;
+          }
+      }
 
-    @keyframes float {
-        0% {
-            transform: translateY(0) rotate(0deg);
-        }
-        50% {
-            transform: translateY(-20px) rotate(10deg);
-        }
-        100% {
-            transform: translateY(0) rotate(0deg);
-        }
-    }
+      @keyframes float {
+          0% {
+              transform: translateY(0) rotate(0deg);
+          }
+          50% {
+              transform: translateY(-20px) rotate(10deg);
+          }
+          100% {
+              transform: translateY(0) rotate(0deg);
+          }
+      }
 
-    .heart-container {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+      .heart-container {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+      }
 
-    .heart {
-        position: absolute;
-        font-size: 100px;
-        color: white;
-        animation: heartBeat 1.5s ease-in-out infinite;
-        text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-    }
+      .heart {
+          position: absolute;
+          font-size: 100px;
+          color: white;
+          animation: heartBeat 1.5s ease-in-out infinite;
+          text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+      }
 
-    .floating-hearts {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-    }
+      .floating-hearts {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          pointer-events: none;
+      }
 
-    .floating-heart {
-        position: absolute;
-        font-size: 30px;
-        color: rgba(255, 255, 255, 0.6);
-        animation: float 3s ease-in-out infinite;
-    }
+      .floating-heart {
+          position: absolute;
+          font-size: 30px;
+          color: rgba(255, 255, 255, 0.6);
+          animation: float 3s ease-in-out infinite;
+      }
 
-    .login-success-text {
-        font-size: 36px;
-        color: white;
-        text-align: center;
-        margin-top: 20px;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        font-weight: bold;
-        z-index: 2;
-    }
+      .login-success-text {
+          font-size: 36px;
+          color: white;
+          text-align: center;
+          margin-top: 20px;
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+          font-weight: bold;
+          z-index: 2;
+      }
 
-    .login-success-subtext {
-        font-size: 18px;
-        color: rgba(255, 255, 255, 0.9);
-        margin-top: 10px;
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-        z-index: 2;
-    }
+      .login-success-subtext {
+          font-size: 18px;
+          color: rgba(255, 255, 255, 0.9);
+          margin-top: 10px;
+          text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+          z-index: 2;
+      }
 
-    /* 优惠券样式 */
-    .coupon-card {
+      /* 优惠券样式 */
+      .coupon-card {
         border: 2px dashed #FF5722;
         border-radius: 8px;
         padding: 15px;
         margin: 10px 0;
         background: rgba(255, 87, 34, 0.05);
         transition: all 0.3s ease;
-    }
+      }
 
-    .coupon-card:hover {
+      .coupon-card:hover {
         transform: translateY(-3px);
         box-shadow: 0 4px 15px rgba(255, 87, 34, 0.2);
-    }
+      }
 
-    .coupon-card.selected {
-        background: rgba(255, 87, 34, 0.1);
+      .coupon-card.selected {
+        background: rgba(255, 87, 34, 0.15);
         border-style: solid;
-    }
+        border-width: 2px;
+        border-color: #FF5722;
+        box-shadow: 0 4px 12px rgba(255, 87, 34, 0.25);
+        position: relative;
+      }
+      
+      .coupon-card.selected::after {
+        content: '✓';
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        background: #FF5722;
+        color: white;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        font-weight: bold;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      }
 
-    .coupon-discount {
+      .coupon-discount {
         font-size: 24px;
         font-weight: bold;
         color: #FF5722;
-    }
+      }
 
-    .coupon-condition {
+      .coupon-condition {
         font-size: 14px;
         color: #666;
         margin-top: 5px;
+      }
+    }
+    
+    /* 登录页面美食背景 */
+    .food-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+      background-size: cover;
+      background-position: center;
+      filter: blur(3px) brightness(0.7);
+      z-index: -1;
+      animation: slowZoom 30s infinite alternate ease-in-out;
+      transform-origin: center;
+    }
+    
+    .food-bg::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255, 107, 107, 0.4) 0%, rgba(255, 184, 140, 0.4) 100%);
+    }
+    
+    @keyframes slowZoom {
+      0% {
+        transform: scale(1);
+      }
+      100% {
+        transform: scale(1.1);
+      }
+    }
+    
+    .login-container {
+      backdrop-filter: blur(10px);
+      background-color: rgba(255, 255, 255, 0.85);
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+      animation: fadeInUp 0.8s ease-out;
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .login-title {
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .floating-food {
+      position: absolute;
+      opacity: 0.8;
+      filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+      animation: float 6s infinite ease-in-out;
+      z-index: -1;
+    }
+    
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-20px) rotate(5deg);
+      }
     }
   </style>
 </head>
@@ -366,11 +463,20 @@
   <!-- 应用容器 -->
   <div id="app" class="min-h-screen flex flex-col">
     <!-- 登录页 -->
-    <div id="login-page" class="flex flex-col items-center justify-center h-screen p-6 bg-gradient-to-br from-primary/5 to-secondary/5">
-      <div class="w-full max-w-md bg-white rounded-2xl p-8 card-shadow fade-in">
+    <div id="login-page" class="flex flex-col items-center justify-center h-screen p-6">
+      <!-- 美食背景 -->
+      <div class="food-bg"></div>
+      
+      <!-- 漂浮的食物图标 -->
+      <img src="https://cdn-icons-png.flaticon.com/512/2515/2515263.png" class="floating-food w-16 h-16 top-20 left-20" style="animation-delay: 0s;">
+      <img src="https://cdn-icons-png.flaticon.com/512/1046/1046857.png" class="floating-food w-14 h-14 top-40 right-40" style="animation-delay: 1s;">
+      <img src="https://cdn-icons-png.flaticon.com/512/1147/1147805.png" class="floating-food w-12 h-12 bottom-20 left-1/4" style="animation-delay: 2s;">
+      <img src="https://cdn-icons-png.flaticon.com/512/3075/3075929.png" class="floating-food w-16 h-16 bottom-40 right-1/4" style="animation-delay: 3s;">
+      
+      <div class="w-full max-w-md login-container p-8 fade-in">
         <div class="text-center mb-8">
-          <h1 class="text-[clamp(1.8rem,5vw,2.5rem)] font-bold text-primary mb-2">缪大厨美食</h1>
-          <p class="text-gray-500">请登录后点餐</p>
+          <h1 class="text-[clamp(1.8rem,5vw,2.5rem)] font-bold text-primary mb-2 login-title">缪大厨美食</h1>
+          <p class="text-gray-600">请登录后点餐</p>
         </div>
         
         <form id="login-form" class="space-y-6">
@@ -955,54 +1061,12 @@
     </div>
   </div>
 
-  <!-- 优惠券展示区域 -->
-  <div class="fixed bottom-20 right-4 z-40">
-    <button onclick="showCouponModal()" class="bg-primary text-white p-3 rounded-full shadow-lg hover:bg-opacity-90">
-      <i class="fa fa-ticket"></i>
-    </button>
-  </div>
-
   <!-- 优惠券列表 -->
   <div id="couponList" class="fixed bottom-20 right-16 z-40 bg-white rounded-lg shadow-lg p-4 w-64 hidden">
     <h4 class="font-bold mb-2">我的优惠券</h4>
-    <div id="availableCoupons" class="space-y-2">
       <!-- 优惠券将通过JavaScript动态添加 -->
     </div>
   </div>
-
-  <style>
-    /* 优惠券样式 */
-    .coupon-card {
-      border: 2px dashed #FF5722;
-      border-radius: 8px;
-      padding: 15px;
-      margin: 10px 0;
-      background: rgba(255, 87, 34, 0.05);
-      transition: all 0.3s ease;
-    }
-
-    .coupon-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 4px 15px rgba(255, 87, 34, 0.2);
-    }
-
-    .coupon-card.selected {
-      background: rgba(255, 87, 34, 0.1);
-      border-style: solid;
-    }
-
-    .coupon-discount {
-      font-size: 24px;
-      font-weight: bold;
-      color: #FF5722;
-    }
-
-    .coupon-condition {
-      font-size: 14px;
-      color: #666;
-      margin-top: 5px;
-    }
-  </style>
 
   <!-- 结算页面 -->
   <div id="checkoutPage" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
@@ -1496,16 +1560,49 @@
       checkoutPage.classList.add('hidden');
       successPage.classList.add('hidden');
       orderDetailPage.classList.add('hidden');
+      document.getElementById('coupon-page').classList.add('hidden');
       
       // 显示目标页面
       if (page === 'menu') {
         document.getElementById('menu-page').classList.remove('hidden');
+        // 更新导航栏高亮
+        document.getElementById('home-nav').classList.add('text-primary');
+        document.getElementById('home-nav').classList.remove('text-gray-500');
+        document.getElementById('cart-nav').classList.add('text-gray-500');
+        document.getElementById('cart-nav').classList.remove('text-primary');
+        document.getElementById('coupon-nav').classList.add('text-gray-500');
+        document.getElementById('coupon-nav').classList.remove('text-primary');
       } else if (page === 'cart') {
         cartPage.classList.remove('hidden');
         updateCartUI();
+        // 更新导航栏高亮
+        document.getElementById('home-nav').classList.add('text-gray-500');
+        document.getElementById('home-nav').classList.remove('text-primary');
+        document.getElementById('cart-nav').classList.add('text-primary');
+        document.getElementById('cart-nav').classList.remove('text-gray-500');
+        document.getElementById('coupon-nav').classList.add('text-gray-500');
+        document.getElementById('coupon-nav').classList.remove('text-primary');
       } else if (page === 'checkout') {
         checkoutPage.classList.remove('hidden');
         updateCheckoutUI();
+        // 保持购物车导航栏高亮
+        document.getElementById('home-nav').classList.add('text-gray-500');
+        document.getElementById('home-nav').classList.remove('text-primary');
+        document.getElementById('cart-nav').classList.add('text-primary');
+        document.getElementById('cart-nav').classList.remove('text-gray-500');
+        document.getElementById('coupon-nav').classList.add('text-gray-500');
+        document.getElementById('coupon-nav').classList.remove('text-primary');
+      } else if (page === 'coupon') {
+        document.getElementById('coupon-page').classList.remove('hidden');
+        // 更新导航栏高亮
+        document.getElementById('home-nav').classList.add('text-gray-500');
+        document.getElementById('home-nav').classList.remove('text-primary');
+        document.getElementById('cart-nav').classList.add('text-gray-500');
+        document.getElementById('cart-nav').classList.remove('text-primary');
+        document.getElementById('coupon-nav').classList.add('text-primary');
+        document.getElementById('coupon-nav').classList.remove('text-gray-500');
+        // 更新优惠券列表
+        updateMyCoupons();
       }
     }
     
@@ -1822,7 +1919,7 @@
             <p class="text-sm text-gray-500 mb-1">规格: ${item.spec} | 辣度: ${item.spicy}</p>
             <div class="flex justify-between items-center">
               <span class="text-sm">x ${item.quantity}</span>
-              <span class="text-primary font-bold">¥${item.price * item.quantity}</span>
+              <span class="text-primary font-bold">¥${(item.price * item.quantity).toFixed(2)}</span>
             </div>
           </div>
         `;
@@ -1830,10 +1927,134 @@
         checkoutItems.appendChild(itemElement);
       });
       
+      // 先移除已存在的优惠券区域
+      const existingCouponSection = document.getElementById('checkout-coupon-section');
+      if (existingCouponSection) {
+        existingCouponSection.remove();
+      }
+      
+      // 创建新的优惠券区域
+      const couponSection = document.createElement('div');
+      couponSection.id = 'checkout-coupon-section';
+      couponSection.className = 'bg-white rounded-xl overflow-hidden shadow-sm mb-6 mt-4';
+      
+      // 显示可用优惠券
+      const couponContainer = document.createElement('div');
+      couponContainer.className = 'mt-4 p-3 border-t border-gray-100';
+      couponContainer.innerHTML = '<h3 class="font-semibold mb-2">选择优惠券</h3>';
+      
+      const availableCoupons = getUnusedCoupons();
+      if (availableCoupons.length > 0) {
+        const couponSelector = document.createElement('div');
+        couponSelector.className = 'space-y-2';
+        
+        // 添加可用优惠券
+        availableCoupons.forEach(coupon => {
+          const couponElement = document.createElement('div');
+          couponElement.className = `coupon-card ${selectedCoupon?.id === coupon.id ? 'selected' : ''}`;
+          couponElement.setAttribute('data-id', coupon.id);
+          couponElement.innerHTML = `
+            <div class="flex justify-between items-center">
+              <div>
+                <div class="coupon-discount">${coupon.discount * 10}折优惠券</div>
+                <div class="text-xs text-gray-500">${coupon.condition || '特殊活动'}</div>
+              </div>
+              <button class="bg-primary text-white px-3 py-1 rounded-full text-sm" 
+                      onclick="selectCoupon(${coupon.id})">
+                ${selectedCoupon?.id === coupon.id ? '已选择' : '选择'}
+              </button>
+            </div>
+          `;
+          couponSelector.appendChild(couponElement);
+        });
+        
+        couponContainer.appendChild(couponSelector);
+      } else {
+        couponContainer.innerHTML += '<p class="text-gray-500 text-sm">暂无可用优惠券</p>';
+      }
+      
+      // 添加到优惠券区域
+      couponSection.appendChild(couponContainer);
+      
+      // 添加到结算页面
+      const summarySection = document.querySelector('#checkout-page .bg-white.rounded-xl.p-5.shadow-sm');
+      checkoutPage.insertBefore(couponSection, summarySection);
+      
       // 更新小计和总计
+      updateCheckoutPrices();
+    }
+    
+    // 获取未使用的优惠券
+    function getUnusedCoupons() {
+      return availableCoupons.filter(coupon => !coupon.used);
+    }
+    
+    // 清除选中的优惠券
+    function clearSelectedCoupon() {
+      selectedCoupon = null;
+      
+      // 移除所有优惠券的选中样式
+      document.querySelectorAll('.coupon-card').forEach(card => {
+        card.classList.remove('selected');
+      });
+      
+      // 更新价格显示
+      updateCheckoutPrices();
+      updateTotalPrice();
+      
+      // 显示提示消息
+      showToast('已取消使用优惠券');
+    }
+    
+    // 更新结算页面的价格显示
+    function updateCheckoutPrices() {
       const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-      checkoutSubtotalEl.textContent = `¥${subtotal}`;
-      checkoutTotalEl.textContent = `¥${subtotal}`;
+      checkoutSubtotalEl.textContent = `¥${subtotal.toFixed(2)}`;
+      
+      // 应用优惠券
+      if (selectedCoupon) {
+        const discount = subtotal * (1 - selectedCoupon.discount);
+        const discountedTotal = subtotal - discount;
+        
+        // 显示折扣信息
+        document.querySelector('#checkout-page .space-y-3').innerHTML = `
+          <div class="flex justify-between">
+            <span class="text-gray-600">商品小计</span>
+            <span>¥${subtotal.toFixed(2)}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-600">配送费</span>
+            <span>¥0</span>
+          </div>
+          <div class="flex justify-between text-green-500 font-medium">
+            <span>优惠 (${selectedCoupon.discount * 10}折)</span>
+            <span>-¥${discount.toFixed(2)}</span>
+          </div>
+          <div class="flex justify-between pt-3 border-t border-gray-100">
+            <span class="font-semibold">实付款</span>
+            <span id="checkout-total" class="font-semibold text-primary text-xl">¥${discountedTotal.toFixed(2)}</span>
+          </div>
+        `;
+      } else {
+        document.querySelector('#checkout-page .space-y-3').innerHTML = `
+          <div class="flex justify-between">
+            <span class="text-gray-600">商品小计</span>
+            <span>¥${subtotal.toFixed(2)}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-600">配送费</span>
+            <span>¥0</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-600">优惠</span>
+            <span class="text-green-500">-¥0</span>
+          </div>
+          <div class="flex justify-between pt-3 border-t border-gray-100">
+            <span class="font-semibold">实付款</span>
+            <span id="checkout-total" class="font-semibold text-primary text-xl">¥${subtotal.toFixed(2)}</span>
+          </div>
+        `;
+      }
     }
     
     // 处理提交订单
@@ -1843,25 +2064,128 @@
         return;
       }
       
+      // 计算订单总额（考虑优惠券）
+      let subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+      let total = subtotal;
+      let discount = 0;
+      
+      if (selectedCoupon) {
+        discount = subtotal * (1 - selectedCoupon.discount);
+        total = subtotal - discount;
+      }
+      
       // 更新订单金额
-      const total = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-      orderAmountSpan.textContent = `¥${total}`;
+      orderAmountSpan.textContent = `¥${total.toFixed(2)}`;
       
       // 保存当前订单数据用于订单详情页
       currentOrder = {
-        id: orderNumberSpan.textContent,
-        time: orderTimeSpan.textContent,
+        id: generateOrderNumber(),
+        time: new Date().toISOString().slice(0, 16).replace('T', ' '),
         amount: total,
-        payment: document.querySelector('input[name="payment"]:checked').nextElementSibling.textContent,
+        subtotal: subtotal,
+        discount: discount,
+        payment: document.querySelector('input[name="payment"]:checked').nextElementSibling.textContent.trim(),
         recipient: detailRecipient.textContent,
         phone: detailPhone.textContent,
         address: detailAddress.textContent,
-        items: [...cart]
+        items: [...cart],
+        usedCoupon: selectedCoupon ? { ...selectedCoupon } : null
       };
+      
+      // 如果使用了优惠券，标记为已使用
+      if (selectedCoupon) {
+        const couponIndex = availableCoupons.findIndex(c => c.id === selectedCoupon.id);
+        if (couponIndex !== -1) {
+          availableCoupons[couponIndex].used = true;
+          saveAvailableCoupons();
+        }
+      }
       
       // 显示结算成功页
       checkoutPage.classList.add('hidden');
       successPage.classList.remove('hidden');
+      
+      // 更新成功页面优惠信息
+      updateSuccessPageInfo();
+      
+      // 清理已经使用的优惠券
+      cleanupUsedCoupons();
+    }
+    
+    // 更新成功页面信息
+    function updateSuccessPageInfo() {
+      if (!currentOrder) return;
+      
+      // 更新订单号和时间
+      document.getElementById('order-number').textContent = currentOrder.id;
+      document.getElementById('order-time').textContent = currentOrder.time;
+      
+      // 更新订单金额和优惠信息
+      const orderInfoEl = document.querySelector('#success-page .bg-gray-50');
+      
+      if (currentOrder.usedCoupon) {
+        orderInfoEl.innerHTML = `
+          <h3 class="font-medium mb-2">订单详情</h3>
+          <div class="space-y-2 text-sm">
+            <div class="flex justify-between">
+              <span class="text-gray-600">订单编号</span>
+              <span id="order-number">${currentOrder.id}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-600">下单时间</span>
+              <span id="order-time">${currentOrder.time}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-600">商品小计</span>
+              <span>¥${currentOrder.subtotal.toFixed(2)}</span>
+            </div>
+            <div class="flex justify-between text-green-500">
+              <span>优惠 (${currentOrder.usedCoupon.discount * 10}折)</span>
+              <span>-¥${currentOrder.discount.toFixed(2)}</span>
+            </div>
+            <div class="flex justify-between font-medium">
+              <span class="text-gray-600">实付款</span>
+              <span id="order-amount" class="text-primary">¥${currentOrder.amount.toFixed(2)}</span>
+            </div>
+          </div>
+        `;
+      } else {
+        orderInfoEl.innerHTML = `
+          <h3 class="font-medium mb-2">订单详情</h3>
+          <div class="space-y-2 text-sm">
+            <div class="flex justify-between">
+              <span class="text-gray-600">订单编号</span>
+              <span id="order-number">${currentOrder.id}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-600">下单时间</span>
+              <span id="order-time">${currentOrder.time}</span>
+            </div>
+            <div class="flex justify-between font-medium">
+              <span class="text-gray-600">实付款</span>
+              <span id="order-amount" class="text-primary">¥${currentOrder.amount.toFixed(2)}</span>
+            </div>
+          </div>
+        `;
+      }
+    }
+    
+    // 生成订单号
+    function generateOrderNumber() {
+      const date = new Date();
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+      return `ORD-${year}${month}${day}-${random}`;
+    }
+    
+    // 清理已使用的优惠券
+    function cleanupUsedCoupons() {
+      // 移除已使用的优惠券
+      availableCoupons = availableCoupons.filter(coupon => !coupon.used);
+      saveAvailableCoupons();
+      selectedCoupon = null;
     }
     
     // 显示订单详情
@@ -1875,8 +2199,55 @@
       detailRecipient.textContent = currentOrder.recipient;
       detailPhone.textContent = currentOrder.phone;
       detailAddress.textContent = currentOrder.address;
-      detailSubtotal.textContent = `¥${currentOrder.amount}`;
-      detailTotal.textContent = `¥${currentOrder.amount}`;
+      
+      // 计算小计金额（未折扣的金额）
+      const subtotal = currentOrder.items.reduce((total, item) => total + (item.price * item.quantity), 0);
+      detailSubtotal.textContent = `¥${subtotal.toFixed(2)}`;
+      
+      // 显示优惠信息（如果有使用优惠券）
+      const orderSummaryEl = document.querySelector('#order-detail-page .p-5:last-child .space-y-2');
+      
+      if (currentOrder.usedCoupon) {
+        const discount = subtotal * (1 - currentOrder.usedCoupon.discount);
+        
+        orderSummaryEl.innerHTML = `
+          <div class="flex justify-between">
+            <span class="text-gray-600">商品小计</span>
+            <span id="detail-subtotal">¥${subtotal.toFixed(2)}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-600">配送费</span>
+            <span>¥0</span>
+          </div>
+          <div class="flex justify-between text-green-500 font-medium">
+            <span>优惠 (${currentOrder.usedCoupon.discount * 10}折)</span>
+            <span>-¥${discount.toFixed(2)}</span>
+          </div>
+          <div class="flex justify-between pt-3 border-t border-gray-100 text-base">
+            <span class="font-semibold">实付款</span>
+            <span id="detail-total" class="font-semibold text-primary">¥${currentOrder.amount.toFixed(2)}</span>
+          </div>
+        `;
+      } else {
+        orderSummaryEl.innerHTML = `
+          <div class="flex justify-between">
+            <span class="text-gray-600">商品小计</span>
+            <span id="detail-subtotal">¥${subtotal.toFixed(2)}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-600">配送费</span>
+            <span>¥0</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-600">优惠</span>
+            <span class="text-green-500">-¥0</span>
+          </div>
+          <div class="flex justify-between pt-3 border-t border-gray-100 text-base">
+            <span class="font-semibold">实付款</span>
+            <span id="detail-total" class="font-semibold text-primary">¥${currentOrder.amount.toFixed(2)}</span>
+          </div>
+        `;
+      }
       
       // 填充订单商品
       orderItemsEl.innerHTML = '';
@@ -1892,7 +2263,7 @@
             <p class="text-sm text-gray-500 mb-1">规格: ${item.spec} | 辣度: ${item.spicy}</p>
             <div class="flex justify-between items-center">
               <span class="text-sm">x ${item.quantity}</span>
-              <span class="text-primary font-bold">¥${item.price * item.quantity}</span>
+              <span class="text-primary font-bold">¥${(item.price * item.quantity).toFixed(2)}</span>
             </div>
           </div>
         `;
@@ -2037,55 +2408,55 @@
       const coupon = {
         id: Date.now(),
         discount: discount,
-        used: false
+        used: false,
+        condition: `按摩${massageDuration}分钟获得`,
+        expiryDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000) // 30天有效期
       };
       availableCoupons.push(coupon);
-      updateCouponList();
+      
+      // 保存到localStorage
+      saveAvailableCoupons();
+      
+      updateMyCoupons();
       
       // 显示成功提示
-      alert(`恭喜获得${discount * 10}折优惠券！`);
+      showToast(`恭喜获得${discount * 10}折优惠券！`);
     }
 
-    // 更新优惠券列表
-    function updateCouponList() {
-      const couponList = document.getElementById('couponList');
-      const availableCouponsDiv = document.getElementById('availableCoupons');
-      availableCouponsDiv.innerHTML = '';
-      
-      if (availableCoupons.length > 0) {
-        couponList.classList.remove('hidden');
-        availableCoupons.forEach(coupon => {
-          if (!coupon.used) {
-            const couponElement = document.createElement('div');
-            couponElement.className = `coupon-card ${selectedCoupon?.id === coupon.id ? 'selected' : ''}`;
-            couponElement.innerHTML = `
-              <div class="flex justify-between items-center">
-                <div class="coupon-discount">${coupon.discount * 10}折优惠券</div>
-                <button class="bg-primary text-white px-3 py-1 rounded-full text-sm" 
-                        onclick="selectCoupon(${coupon.id})">
-                  使用
-                </button>
-              </div>
-            `;
-            availableCouponsDiv.appendChild(couponElement);
-          }
-        });
-      } else {
-        couponList.classList.add('hidden');
-      }
+    // 保存优惠券到localStorage
+    function saveAvailableCoupons() {
+      localStorage.setItem('coupons', JSON.stringify(availableCoupons));
     }
 
     // 选择优惠券
     function selectCoupon(couponId) {
       selectedCoupon = availableCoupons.find(c => c.id === couponId);
-      updateCouponList();
-      updateTotalPrice(); // 更新总价
+      
+      // 更新优惠券选中样式
+      if (document.querySelector('.coupon-card.selected')) {
+        document.querySelectorAll('.coupon-card').forEach(card => {
+          card.classList.remove('selected');
+        });
+      }
+      
+      // 找到当前选中的优惠券元素并添加选中样式
+      const selectedElement = document.querySelector(`.coupon-card[data-id="${couponId}"]`);
+      if (selectedElement) {
+        selectedElement.classList.add('selected');
+      }
+      
+      // 更新价格显示
+      updateCheckoutPrices();
+      updateTotalPrice();
+      
+      // 显示提示消息
+      showToast(`已选择${selectedCoupon.discount * 10}折优惠券`);
     }
 
     // 修改计算总价的函数
     function updateTotalPrice() {
       let total = 0;
-      orderItems.forEach(item => {
+      cart.forEach(item => {
         total += item.price * item.quantity;
       });
       
@@ -2099,20 +2470,21 @@
 
     // 修改提交订单函数
     function submitOrder() {
-      if (orderItems.length === 0) {
-        alert('请先添加商品到购物车！');
+      if (cart.length === 0) {
+        showToast('请先添加商品到购物车！');
         return;
       }
       
       // 使用优惠券
       if (selectedCoupon) {
         selectedCoupon.used = true;
+        saveAvailableCoupons();
         selectedCoupon = null;
-        updateCouponList();
+        updateMyCoupons();
       }
       
       // 原有的提交订单逻辑
-      // ... existing code ...
+      handlePlaceOrder();
     }
 
     // 添加事件监听器
@@ -2130,14 +2502,14 @@
     // 更新结算页面的优惠券列表
     function updateCheckoutCoupons() {
       const checkoutCoupons = document.getElementById('checkoutCoupons');
-      const availableCoupons = availableCoupons.filter(coupon => !coupon.used);
+      const usableCoupons = availableCoupons.filter(coupon => !coupon.used);
       
-      if (availableCoupons.length === 0) {
+      if (usableCoupons.length === 0) {
         checkoutCoupons.innerHTML = '<div class="text-gray-500 text-sm">暂无可用优惠券</div>';
         return;
       }
 
-      checkoutCoupons.innerHTML = availableCoupons.map(coupon => `
+      checkoutCoupons.innerHTML = usableCoupons.map(coupon => `
         <div class="coupon-card ${selectedCoupon?.id === coupon.id ? 'selected' : ''}" 
              onclick="selectCoupon(${coupon.id})">
           <div class="flex justify-between items-center">
@@ -2148,38 +2520,6 @@
       `).join('');
     }
 
-    // 更新结算页面的价格显示
-    function updateCheckoutPrices() {
-      let subtotal = 0;
-      orderItems.forEach(item => {
-        subtotal += item.price * item.quantity;
-      });
-      
-      document.getElementById('subtotalPrice').textContent = `¥${subtotal.toFixed(2)}`;
-      
-      const discountRow = document.getElementById('discountRow');
-      const discountAmount = document.getElementById('discountAmount');
-      const totalPrice = document.getElementById('totalPrice');
-      
-      if (selectedCoupon) {
-        const discount = subtotal * (1 - selectedCoupon.discount);
-        discountRow.style.display = 'flex';
-        discountAmount.textContent = `-¥${discount.toFixed(2)}`;
-        totalPrice.textContent = `¥${(subtotal - discount).toFixed(2)}`;
-      } else {
-        discountRow.style.display = 'none';
-        totalPrice.textContent = `¥${subtotal.toFixed(2)}`;
-      }
-    }
-
-    // 修改选择优惠券的函数
-    function selectCoupon(couponId) {
-      selectedCoupon = availableCoupons.find(c => c.id === couponId);
-      updateCouponList();
-      updateCheckoutCoupons();
-      updateCheckoutPrices();
-    }
-
     // 修改关闭结算页面的函数
     function closeCheckout() {
       document.getElementById('checkoutPage').classList.add('hidden');
@@ -2187,77 +2527,84 @@
 
     // 获取爸爸优惠券
     function getDaddyCoupon() {
+      document.getElementById('couponModal').classList.add('hidden');
+      document.getElementById('daddyModal').classList.remove('hidden');
+    }
+
+    // 处理"爸爸"优惠券获取成功
+    function processDaddyCoupon() {
+      document.getElementById('daddyModal').classList.add('hidden');
+      
       const coupon = {
         id: Date.now(),
         discount: 0.9,
-        used: false
+        used: false,
+        condition: "叫一声爸爸获得",
+        expiryDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000) // 30天有效期
       };
       availableCoupons.push(coupon);
-      updateCouponList();
-      alert('恭喜获得9折优惠券！');
+      
+      // 保存到localStorage
+      saveAvailableCoupons();
+      
+      updateMyCoupons();
+      
+      showToast('恭喜获得9折优惠券！');
     }
 
     function closeDaddyModal() {
       document.getElementById('daddyModal').classList.add('hidden');
     }
 
-    // 显示菜单页面
-    function showMenuPage() {
-      document.getElementById('menu-page').classList.remove('hidden');
-      document.getElementById('cart-page').classList.add('hidden');
-      document.getElementById('coupon-page').classList.add('hidden');
-      
-      // 更新导航按钮状态
-      document.getElementById('home-nav').classList.add('text-primary');
-      document.getElementById('home-nav').classList.remove('text-gray-500');
-      document.getElementById('cart-nav').classList.add('text-gray-500');
-      document.getElementById('cart-nav').classList.remove('text-primary');
-      document.getElementById('coupon-nav').classList.add('text-gray-500');
-      document.getElementById('coupon-nav').classList.remove('text-primary');
+    // 初始化加载优惠券
+    function loadAvailableCoupons() {
+      try {
+        const savedCoupons = localStorage.getItem('coupons');
+        if (savedCoupons) {
+          availableCoupons = JSON.parse(savedCoupons);
+          
+          // 处理日期字符串转换为Date对象
+          availableCoupons.forEach(coupon => {
+            if (typeof coupon.expiryDate === 'string') {
+              coupon.expiryDate = new Date(coupon.expiryDate);
+            }
+          });
+        }
+      } catch (error) {
+        console.error('加载优惠券失败:', error);
+        availableCoupons = [];
+      }
     }
 
-    // 显示购物车页面
-    function showCartPage() {
-      document.getElementById('menu-page').classList.add('hidden');
-      document.getElementById('cart-page').classList.remove('hidden');
-      document.getElementById('coupon-page').classList.add('hidden');
-      
-      // 更新导航按钮状态
-      document.getElementById('home-nav').classList.add('text-gray-500');
-      document.getElementById('home-nav').classList.remove('text-primary');
-      document.getElementById('cart-nav').classList.add('text-primary');
-      document.getElementById('cart-nav').classList.remove('text-gray-500');
-      document.getElementById('coupon-nav').classList.add('text-gray-500');
-      document.getElementById('coupon-nav').classList.remove('text-primary');
-      
-      // 更新购物车内容
-      updateCart();
-    }
-
-    // 显示优惠券页面
-    function showCouponPage() {
-      document.getElementById('menu-page').classList.add('hidden');
-      document.getElementById('cart-page').classList.add('hidden');
-      document.getElementById('coupon-page').classList.remove('hidden');
-      
-      // 更新导航按钮状态
-      document.getElementById('home-nav').classList.add('text-gray-500');
-      document.getElementById('home-nav').classList.remove('text-primary');
-      document.getElementById('cart-nav').classList.add('text-gray-500');
-      document.getElementById('cart-nav').classList.remove('text-primary');
-      document.getElementById('coupon-nav').classList.add('text-primary');
-      document.getElementById('coupon-nav').classList.remove('text-gray-500');
-      
-      // 更新优惠券列表
-      updateMyCoupons();
+    // 使用优惠券
+    function useCoupon(id) {
+      const coupon = availableCoupons.find(c => c.id === id);
+      if (coupon) {
+        selectedCoupon = coupon;
+        showToast(`已选择${coupon.discount * 10}折优惠券`);
+        
+        // 切换到购物车页面
+        switchToPage('cart');
+        
+        // 更新购物车UI
+        updateCartUI();
+        
+        // 如果购物车不为空，自动进入结算页面
+        if (cart.length > 0) {
+          setTimeout(() => {
+            switchToPage('checkout');
+          }, 500);
+        }
+      }
     }
 
     // 更新我的优惠券列表
     function updateMyCoupons() {
-      const coupons = JSON.parse(localStorage.getItem('coupons') || '[]');
       const myCouponsContainer = document.getElementById('my-coupons');
       
-      if (coupons.length === 0) {
+      if (!myCouponsContainer) return;
+      
+      if (availableCoupons.length === 0) {
         myCouponsContainer.innerHTML = `
           <div class="text-center py-8">
             <i class="fa fa-ticket text-4xl text-gray-300 mb-4"></i>
@@ -2270,16 +2617,17 @@
         return;
       }
       
-      myCouponsContainer.innerHTML = coupons.map(coupon => `
-        <div class="coupon-card ${coupon.used ? 'opacity-50' : ''}">
+      myCouponsContainer.innerHTML = availableCoupons.map(coupon => `
+        <div class="coupon-card ${coupon.used ? 'opacity-50' : ''} ${selectedCoupon?.id === coupon.id ? 'selected' : ''}" 
+             data-id="${coupon.id}">
           <div class="flex justify-between items-center">
             <div>
               <div class="coupon-discount">${(coupon.discount * 10).toFixed(0)}折优惠券</div>
-              <div class="coupon-condition">${coupon.condition}</div>
+              <div class="coupon-condition">${coupon.condition || '特殊活动'}</div>
               <div class="text-sm text-gray-500 mt-2">有效期至：${new Date(coupon.expiryDate).toLocaleDateString()}</div>
             </div>
             ${!coupon.used ? `
-              <button onclick="useCoupon(${coupon.discount})" class="bg-primary text-white px-4 py-2 rounded-full hover:bg-opacity-90">
+              <button onclick="useCoupon(${coupon.id})" class="bg-primary text-white px-4 py-2 rounded-full hover:bg-opacity-90">
                 使用
               </button>
             ` : `
@@ -2290,17 +2638,28 @@
       `).join('');
     }
 
-    // 页面加载完成后初始化
-    document.addEventListener('DOMContentLoaded', function() {
+    // 显示优惠券页面
+    function showCouponPage() {
+      switchToPage('coupon');
+    }
+
+    // 初始化
+    document.addEventListener('DOMContentLoaded', () => {
+      // ... existing initialization code ...
+      
+      // 初始化优惠券
+      loadAvailableCoupons();
+      updateMyCoupons();
+      
       // 添加导航按钮点击事件
       document.getElementById('home-nav').addEventListener('click', function(e) {
         e.preventDefault();
-        showMenuPage();
+        switchToPage('menu');
       });
       
       document.getElementById('cart-nav').addEventListener('click', function(e) {
         e.preventDefault();
-        showCartPage();
+        switchToPage('cart');
       });
       
       document.getElementById('coupon-nav').addEventListener('click', function(e) {
@@ -2308,9 +2667,23 @@
         showCouponPage();
       });
       
-      // 显示菜单页面
-      showMenuPage();
+      // 为"爸爸"优惠券按钮添加事件
+      document.getElementById('startRecordingBtn').addEventListener('click', function() {
+        // 模拟录音过程，实际应用中需要请求麦克风权限
+        document.getElementById('startRecordingBtn').classList.add('hidden');
+        document.getElementById('stopRecordingBtn').classList.remove('hidden');
+        
+        // 2秒后自动"停止录音"
+        setTimeout(() => {
+          document.getElementById('stopRecordingBtn').classList.add('hidden');
+          processDaddyCoupon();
+        }, 2000);
+      });
+      
+      document.getElementById('stopRecordingBtn').addEventListener('click', processDaddyCoupon);
     });
+    
+    // ... existing code ...
   </script>
 </body>
 </html>
