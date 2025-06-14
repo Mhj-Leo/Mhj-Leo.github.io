@@ -1184,19 +1184,42 @@
   <div id="daddyModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
     <div class="bg-white rounded-lg p-6 w-96 max-w-full mx-4 text-center">
       <h3 class="text-xl font-bold mb-4">获取9折优惠券</h3>
-      <p class="text-gray-600 mb-4">请对着麦克风叫一声"爸爸"</p>
-      <button id="startRecordingBtn" class="bg-primary text-white px-6 py-2 rounded-full hover:bg-opacity-90">
-        开始录音
-      </button>
-      <button id="stopRecordingBtn" class="hidden mt-2 bg-gray-200 text-gray-700 px-6 py-2 rounded-full hover:bg-gray-300">
-        停止录音
-      </button>
+      <p class="text-gray-600 mb-4" id="daddyModalText">请对着麦克风叫一声"爸爸"</p>
+      <div id="voice-animation-daddy" class="w-24 h-24 mx-auto mb-4 rounded-full flex items-center justify-center hidden">
+        <div class="voice-wave"></div>
+        <div class="voice-wave delay-1"></div>
+        <div class="voice-wave delay-2"></div>
+        <i class="fa fa-microphone text-3xl text-primary"></i>
+      </div>
+      <p id="daddy-voice-result" class="text-gray-600 mb-4 hidden"></p>
+      <div class="flex flex-col space-y-3">
+        <button id="startRecordingBtn" class="bg-primary text-white px-6 py-2 rounded-full hover:bg-opacity-90">
+          开始录音
+        </button>
+        <div id="recording-controls" class="hidden flex space-x-3">
+          <button id="stopRecordingBtn" class="flex-1 bg-gray-200 text-gray-700 px-6 py-2 rounded-full hover:bg-gray-300">
+            停止录音
+          </button>
+          <button id="cancelRecordingBtn" class="flex-1 bg-red-500 text-white px-6 py-2 rounded-full hover:bg-red-600">
+            取消录音
+          </button>
+        </div>
+      </div>
       <button onclick="closeDaddyModal()" class="mt-4 w-full bg-gray-200 text-gray-700 px-4 py-2 rounded-full hover:bg-gray-300">
-        取消
+        关闭
       </button>
     </div>
   </div>
 
+  <!-- 敲头表情动画 -->
+  <div id="knockHeadAnimation" class="fixed inset-0 bg-black bg-opacity-80 hidden z-50 flex flex-col items-center justify-center">
+    <div class="text-9xl animate-bounce mb-4">🤦</div>
+    <p class="text-white text-2xl font-bold mb-8 animate-pulse">你小子，还不承认我是你爸爸</p>
+    <button onclick="closeKnockHeadAnimation()" class="bg-white text-primary px-6 py-2 rounded-full hover:bg-opacity-90">
+      知道了
+    </button>
+  </div>
+  
   <!-- 按摩计时器模态框 -->
   <div id="massageTimerModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
     <div class="bg-white rounded-lg p-6 w-96 max-w-full mx-4 text-center relative">
@@ -1280,6 +1303,124 @@
     let searchTerm = '';
     let currentOrder = null;
     let loggedInUser = null; // 存储登录用户信息
+    
+    // 爸爸语音识别变量
+    let daddyRecognition;
+    let daddyRecognitionResult = '';
+    
+    // 初始化爸爸语音识别
+    function initDaddyVoiceRecognition() {
+      // 检查浏览器是否支持语音识别
+      if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+        daddyRecognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        daddyRecognition.continuous = false;
+        daddyRecognition.interimResults = true;
+        daddyRecognition.lang = 'zh-CN'; // 设置为中文
+        
+        // 处理识别结果
+        daddyRecognition.onresult = function(event) {
+          let interimTranscript = '';
+          let finalTranscript = '';
+          
+          for (let i = event.resultIndex; i < event.results.length; i++) {
+            const transcript = event.results[i][0].transcript;
+            if (event.results[i].isFinal) {
+              finalTranscript += transcript;
+            } else {
+              interimTranscript += transcript;
+            }
+          }
+          
+          // 显示识别结果
+          daddyRecognitionResult = finalTranscript || interimTranscript;
+          document.getElementById('daddy-voice-result').textContent = daddyRecognitionResult || '正在聆听...';
+          document.getElementById('daddy-voice-result').classList.remove('hidden');
+        };
+        
+        // 处理识别结束
+        daddyRecognition.onend = function() {
+          document.getElementById('voice-animation-daddy').classList.remove('recording');
+          
+          if (!daddyRecognitionResult) {
+            // 隐藏爸爸模态框
+            document.getElementById('daddyModal').classList.add('hidden');
+            
+            // 显示敲头表情动画
+            document.getElementById('knockHeadAnimation').classList.remove('hidden');
+            
+            // 重置录音按钮状态，确保下次可以正常使用
+            document.getElementById('recording-controls').classList.add('hidden');
+            document.getElementById('startRecordingBtn').classList.remove('hidden');
+            return;
+          }
+          
+          // 检查是否说了"爸爸"
+          const isDaddy = daddyRecognitionResult.includes('爸爸');
+          processDaddyCoupon(isDaddy);
+        };
+        
+        // 处理错误
+        daddyRecognition.onerror = function(event) {
+          console.error('语音识别错误:', event.error);
+          document.getElementById('voice-animation-daddy').classList.remove('recording');
+          
+                  // 处理不同类型的错误
+        if (event.error === 'no-speech') {
+          // 显示提示信息
+          document.getElementById('daddy-voice-result').textContent = '没有听到您说话，请重试';
+          document.getElementById('daddy-voice-result').classList.remove('hidden');
+          document.getElementById('recording-controls').classList.add('hidden');
+          document.getElementById('startRecordingBtn').classList.remove('hidden');
+          
+          // 3秒后重新显示开始录音按钮
+          setTimeout(() => {
+            if (document.getElementById('daddyModal').classList.contains('hidden')) return;
+            document.getElementById('daddyModalText').textContent = '请对着麦克风叫一声"爸爸"';
+            document.getElementById('daddy-voice-result').classList.add('hidden');
+          }, 3000);
+        } else {
+          // 其他错误显示敲头表情
+          document.getElementById('daddyModal').classList.add('hidden');
+          document.getElementById('knockHeadAnimation').classList.remove('hidden');
+          document.getElementById('recording-controls').classList.add('hidden');
+          document.getElementById('startRecordingBtn').classList.remove('hidden');
+        }
+        };
+      }
+    }
+    
+    // 开始爸爸语音识别
+    function startDaddyVoiceRecognition() {
+      if (!daddyRecognition) {
+        initDaddyVoiceRecognition();
+      }
+      
+      if (daddyRecognition) {
+        document.getElementById('daddy-voice-result').textContent = '正在聆听...';
+        document.getElementById('daddy-voice-result').classList.remove('hidden');
+        daddyRecognitionResult = '';
+        
+        try {
+          daddyRecognition.start();
+        } catch (e) {
+          console.error('语音识别启动失败:', e);
+          document.getElementById('daddy-voice-result').textContent = '语音识别启动失败，请重试';
+          document.getElementById('stopRecordingBtn').classList.add('hidden');
+          document.getElementById('startRecordingBtn').classList.remove('hidden');
+        }
+      }
+    }
+    
+    // 停止爸爸语音识别
+    function stopDaddyVoiceRecognition() {
+      if (daddyRecognition) {
+        try {
+          daddyRecognition.stop();
+        } catch (e) {
+          console.error('语音识别停止失败:', e);
+        }
+      }
+    }
     
     // 菜品数据（已替换为真实可访问的图片）
     const foodData = [
@@ -2770,39 +2911,70 @@
     function getDaddyCoupon() {
       document.getElementById('couponModal').classList.add('hidden');
       document.getElementById('daddyModal').classList.remove('hidden');
+      
+      // 重置模态框状态
+      document.getElementById('daddyModalText').textContent = '请对着麦克风叫一声"爸爸"';
+      document.getElementById('daddy-voice-result').classList.add('hidden');
+      document.getElementById('daddy-voice-result').textContent = '';
+      document.getElementById('startRecordingBtn').classList.remove('hidden');
+      document.getElementById('recording-controls').classList.add('hidden');
+      document.getElementById('voice-animation-daddy').classList.add('hidden');
+      document.getElementById('voice-animation-daddy').classList.remove('recording');
     }
 
     // 处理"爸爸"优惠券获取成功
-    function processDaddyCoupon() {
-      document.getElementById('daddyModal').classList.add('hidden');
-      
-      const coupon = {
-        id: Date.now(),
-        discount: 0.9,
-        used: false,
-        condition: "叫一声爸爸获得",
-        expiryDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000) // 30天有效期
-      };
-      availableCoupons.push(coupon);
-      
-      // 保存到localStorage
-      saveAvailableCoupons();
-      
-      updateMyCoupons();
+    function processDaddyCoupon(isDaddy) {
+      // 隐藏录音动画
+      document.getElementById('voice-animation-daddy').classList.add('hidden');
+      document.getElementById('voice-animation-daddy').classList.remove('recording');
       
       // 重置录音按钮状态，确保下次可以正常使用
-      document.getElementById('stopRecordingBtn').classList.add('hidden');
+      document.getElementById('recording-controls').classList.add('hidden');
       document.getElementById('startRecordingBtn').classList.remove('hidden');
       
-      showToast('恭喜获得9折优惠券！');
+      if (isDaddy) {
+        document.getElementById('daddyModal').classList.add('hidden');
+        
+        const coupon = {
+          id: Date.now(),
+          discount: 0.9,
+          used: false,
+          condition: "叫一声爸爸获得",
+          expiryDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000) // 30天有效期
+        };
+        availableCoupons.push(coupon);
+        
+        // 保存到localStorage
+        saveAvailableCoupons();
+        
+        updateMyCoupons();
+        
+        showToast('恭喜获得9折优惠券！');
+      } else {
+        // 隐藏爸爸模态框
+        document.getElementById('daddyModal').classList.add('hidden');
+        
+        // 显示敲头表情动画
+        document.getElementById('knockHeadAnimation').classList.remove('hidden');
+      }
     }
 
     function closeDaddyModal() {
       document.getElementById('daddyModal').classList.add('hidden');
       
+      // 停止语音识别（如果正在进行）
+      stopDaddyVoiceRecognition();
+      
       // 重置录音按钮状态，确保下次可以正常使用
-      document.getElementById('stopRecordingBtn').classList.add('hidden');
+      document.getElementById('recording-controls').classList.add('hidden');
       document.getElementById('startRecordingBtn').classList.remove('hidden');
+      document.getElementById('voice-animation-daddy').classList.add('hidden');
+      document.getElementById('voice-animation-daddy').classList.remove('recording');
+    }
+
+    // 关闭敲头表情动画
+    function closeKnockHeadAnimation() {
+      document.getElementById('knockHeadAnimation').classList.add('hidden');
     }
 
     // 初始化加载优惠券
@@ -2918,18 +3090,35 @@
       
       // 为"爸爸"优惠券按钮添加事件
       document.getElementById('startRecordingBtn').addEventListener('click', function() {
-        // 模拟录音过程，实际应用中需要请求麦克风权限
+        // 使用Web Speech API进行语音识别
         document.getElementById('startRecordingBtn').classList.add('hidden');
-        document.getElementById('stopRecordingBtn').classList.remove('hidden');
+        document.getElementById('recording-controls').classList.remove('hidden');
+        document.getElementById('voice-animation-daddy').classList.remove('hidden');
+        document.getElementById('voice-animation-daddy').classList.add('recording');
         
-        // 2秒后自动"停止录音"
-        setTimeout(() => {
-          document.getElementById('stopRecordingBtn').classList.add('hidden');
-          processDaddyCoupon();
-        }, 2000);
+        startDaddyVoiceRecognition();
       });
       
-      document.getElementById('stopRecordingBtn').addEventListener('click', processDaddyCoupon);
+      document.getElementById('stopRecordingBtn').addEventListener('click', function() {
+        stopDaddyVoiceRecognition();
+      });
+      
+      document.getElementById('cancelRecordingBtn').addEventListener('click', function() {
+        // 停止录音并重置状态，不处理结果
+        stopDaddyVoiceRecognition();
+        document.getElementById('recording-controls').classList.add('hidden');
+        document.getElementById('startRecordingBtn').classList.remove('hidden');
+        document.getElementById('voice-animation-daddy').classList.add('hidden');
+        document.getElementById('voice-animation-daddy').classList.remove('recording');
+        document.getElementById('daddy-voice-result').classList.add('hidden');
+      });
+      
+      // 点击敲头动画背景关闭
+      document.getElementById('knockHeadAnimation').addEventListener('click', function(e) {
+        if (e.target === this) {
+          closeKnockHeadAnimation();
+        }
+      });
     });
     
     // ... existing code ...
