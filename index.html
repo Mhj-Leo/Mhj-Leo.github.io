@@ -2790,11 +2790,19 @@
       
       updateMyCoupons();
       
+      // 重置录音按钮状态，确保下次可以正常使用
+      document.getElementById('stopRecordingBtn').classList.add('hidden');
+      document.getElementById('startRecordingBtn').classList.remove('hidden');
+      
       showToast('恭喜获得9折优惠券！');
     }
 
     function closeDaddyModal() {
       document.getElementById('daddyModal').classList.add('hidden');
+      
+      // 重置录音按钮状态，确保下次可以正常使用
+      document.getElementById('stopRecordingBtn').classList.add('hidden');
+      document.getElementById('startRecordingBtn').classList.remove('hidden');
     }
 
     // 初始化加载优惠券
