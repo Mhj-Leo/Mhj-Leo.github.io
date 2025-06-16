@@ -113,17 +113,21 @@
         }
       }
       .love-text {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        color: theme('colors.love');
-        font-size: 2rem;
-        font-weight: bold;
-        text-shadow: 0 0 15px rgba(255, 77, 109, 0.8);
+        position: relative;
+        color: white;
+        text-align: center;
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 77, 109, 0.8);
         z-index: 60;
-        opacity: 0;
-        animation: fadeInOut 3s ease-in-out forwards;
+        animation: textGlow 3s ease-in-out infinite alternate;
+      }
+      
+      @keyframes textGlow {
+        0% {
+          text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073;
+        }
+        100% {
+          text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6;
+        }
       }
       @keyframes fadeInOut {
         0% {
@@ -1104,8 +1108,12 @@
     </div>
     
     <!-- 登录成功特效容器 -->
-    <div id="login-effect" class="fixed inset-0 z-50 pointer-events-none hidden">
-      <div class="love-text" id="love-message">为王冬公主服务</div>
+    <div id="login-effect" class="fixed inset-0 z-50 pointer-events-none hidden bg-black bg-opacity-80 flex flex-col items-center justify-center">
+      <img src="image/we.jpg" alt="Together" class="max-w-md w-full rounded-lg shadow-lg mb-4">
+      <div class="love-text text-4xl font-bold tracking-wider" id="love-message">
+        <span class="inline-block animate-pulse text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-yellow-400 to-pink-500">王冬专属</span>
+        <div class="text-xl mt-2 text-white animate-bounce">♥ VIP ♥</div>
+      </div>
     </div>
     
     <!-- 模态框 - 登录成功提示 -->
@@ -1434,7 +1442,7 @@
       {
         id: 1,
         name: '宫保鸡丁',
-        price: 38,
+        price: 18,
         description: '经典川菜，鲜嫩鸡肉搭配香脆花生、干辣椒和蔬菜，口感鲜香麻辣。',
         image: 'https://img0.baidu.com/it/u=2614935587,2823371438&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=1067',
         category: 'hot',
@@ -1443,7 +1451,7 @@
       {
         id: 2,
         name: '鱼香肉丝',
-        price: 32,
+        price: 22,
         description: '传统川菜，猪肉丝配以木耳、胡萝卜等蔬菜，酸甜微辣，香气扑鼻。',
         image: 'https://img1.baidu.com/it/u=4072396536,3897783405&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=667',
         category: 'hot',
@@ -1452,7 +1460,7 @@
       {
         id: 3,
         name: '麻婆豆腐',
-        price: 28,
+        price: 12,
         description: '麻辣鲜香的经典川菜，嫩豆腐与肉末完美结合，下饭佳品。',
         image: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimage109.360doc.com%2FDownloadImg%2F2024%2F12%2F1320%2F291950008_3_20241213080511131&refer=http%3A%2F%2Fimage109.360doc.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1752317985&t=3760de53b644b62a6ecc31dbe9d90577',
         category: 'hot',
@@ -1461,7 +1469,7 @@
       {
         id: 4,
         name: '糖醋排骨',
-        price: 42,
+        price: 20,
         description: '酸甜可口的家常菜，猪小排配以特制糖醋汁，肉质鲜嫩。',
         image: 'https://qcloud.dpfile.com/pc/_p2ScpP85UpOivz3B37fvtIAbvOez8g8WJbCX0YpqZ9OvnLpWKfeEkt4lRrW2v6K.jpg',
         category: 'hot',
@@ -1470,7 +1478,7 @@
       {
         id: 5,
         name: '红烧肉',
-        price: 48,
+        price: 18,
         description: '肥而不腻的经典家常菜，五花肉配以冰糖、酱油烧制，香甜可口。',
         image: 'https://img2.baidu.com/it/u=954568553,3432212147&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=745',
         category: 'hot',
@@ -1479,7 +1487,7 @@
       {
         id: 6,
         name: '可乐鸡翅',
-        price: 48,
+        price: 18,
         description: '肥而不腻的经典家常菜，鸡翅配以冰糖、醋，酱油烧制，香甜可口。',
         image: 'https://pic.rmb.bdstatic.com/bjh/240307/0a62de68e24e433f67d2ab558df9ab1b6572.jpeg',
         category: 'hot',
@@ -1488,7 +1496,7 @@
       {
         id: 7,
         name: '辣烧鸡爪',
-        price: 48,
+        price: 22,
         description: '香辣解馋，鸡爪软烂入味',
         image: 'https://img2.baidu.com/it/u=11922117,731404843&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=902',
         category: 'hot',
@@ -1497,7 +1505,7 @@
       {
         id: 8,
         name: '黄焖鸡',
-        price: 48,
+        price: 20,
         description: '黄焖鸡是一道让人回味无穷的美食，它的浓郁香气和独特的口感让人难以忘怀。鸡肉鲜嫩细腻，每一口都充满了醇厚的口感，让人不禁一口接一口。',
         image: 'https://img0.baidu.com/it/u=1626638360,2246865851&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=1212',
         category: 'hot',
@@ -1508,7 +1516,7 @@
       {
         id: 9,
         name: '凉拌黄瓜',
-        price: 12,
+        price: 8,
         description: '清爽可口的家常菜，黄瓜配以蒜末、醋等调料凉拌，解暑佳品。',
         image: 'https://img0.baidu.com/it/u=2460532109,2661651747&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=667',
         category: 'cold',
@@ -1517,7 +1525,7 @@
       {
         id: 10,
         name: '夫妻肺片',
-        price: 36,
+        price: 16,
         description: '经典川菜凉菜，牛头皮、牛心等配以辣椒油、花椒油，麻辣鲜香。',
         image: 'https://img0.baidu.com/it/u=521970733,339027069&fm=253&fmt=auto&app=120&f=JPEG?w=800&h=900',
         category: 'cold',
@@ -1526,7 +1534,7 @@
       {
         id: 11,
         name: '凉拌木耳',
-        price: 16,
+        price: 6,
         description: '健康清爽的家常菜，木耳配以蒜末、醋等调料凉拌，营养丰富。',
         image: 'https://img1.baidu.com/it/u=1821773267,4216692821&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500',
         category: 'cold',
@@ -1537,7 +1545,7 @@
       {
         id: 12,
         name: '青椒肉丝面',
-        price: 18,
+        price: 15,
         description: '手工制作的面条，口感筋道，汤汁鲜美。',
         image: 'https://img1.baidu.com/it/u=4264226242,1050909318&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=647',
         category: 'staple',
@@ -1548,7 +1556,7 @@
       {
         id: 13,
         name: '西红柿鸡蛋汤',
-        price: 16,
+        price: 8,
         description: '简单家常的汤品，西红柿与鸡蛋完美结合，酸甜可口，营养丰富。',
         image: 'https://pic.rmb.bdstatic.com/bjh/240322/events/fc18e216fe55202bd9fec8554ff5869f4335.jpeg@h_1280',
         category: 'soup',
@@ -1557,7 +1565,7 @@
       {
         id: 14,
         name: '酸辣汤',
-        price: 22,
+        price: 12,
         description: '经典川菜汤品，豆腐、木耳等配以辣椒油、花椒油，麻辣鲜香。',
         image: 'https://miaobi-lite.bj.bcebos.com/miaobi/5mao/b%27LV8xNzM2NDg4MTc1LjIyNTkxODg%3D%27/0.png?authorization=bce-auth-v1%2FALTAKmda7zOvhZVbRzBLewvCMU%2F2025-01-10T05%3A49%3A36Z%2F-1%2F%2Fa7e1485c337dc1f7e6ebbad9bc7e98955df4794e671578d8def7ecc60955dade',
         category: 'soup',
@@ -2012,16 +2020,16 @@
       }
     }
     
-    // 显示爱心特效
+    // 显示登录成功特效
     function showLoveEffect() {
       loginEffect.classList.remove('hidden');
-      loveMessage.textContent = loggedInUser && loggedInUser.name === '王冬' 
-        ? '为王冬公主服务' 
-        : '登录成功';
       
-      // 生成多个爱心
-      for (let i = 0; i < 50; i++) {
-        createLoveHeart();
+      // 设置炫酷文本
+      if (loggedInUser && loggedInUser.name === '王冬') {
+        document.querySelector('#love-message span').innerHTML = '王冬专属';
+      } else {
+        document.querySelector('#love-message span').innerHTML = '登录成功';
+        document.querySelector('#love-message div').innerHTML = '欢迎使用';
       }
       
       // 3秒后隐藏特效并显示主应用
@@ -2029,29 +2037,6 @@
         loginEffect.classList.add('hidden');
         loginSuccessModal.classList.remove('hidden');
       }, 3000);
-    }
-    
-    // 创建单个爱心
-    function createLoveHeart() {
-      const heart = document.createElement('div');
-      heart.className = 'love-heart';
-      
-      // 随机位置和大小
-      const size = Math.random() * 15 + 10; // 10-25px
-      const left = Math.random() * 100; // 0-100%
-      const duration = Math.random() * 3 + 2; // 2-5秒
-      
-      heart.style.width = `${size}px`;
-      heart.style.height = `${size}px`;
-      heart.style.left = `${left}%`;
-      heart.style.animationDuration = `${duration}s`;
-      
-      loginEffect.appendChild(heart);
-      
-      // 动画结束后移除元素
-      setTimeout(() => {
-        heart.remove();
-      }, duration * 1000);
     }
     
     // 显示退出登录模态框
