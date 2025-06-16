@@ -369,6 +369,51 @@
           animation: approveAnimation 2s infinite;
           text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
       }
+      
+      /* 点击爱心特效 */
+      .click-heart {
+          position: absolute;
+          font-size: 35px;
+          color: #FF0000;
+          user-select: none;
+          pointer-events: none;
+          z-index: 9999;
+          animation: float-heart 2s forwards;
+          filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8));
+          font-weight: bold;
+          text-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+      }
+      
+      @keyframes float-heart {
+          0% {
+              transform: translate(-50%, -50%) scale(0);
+              opacity: 0;
+              filter: drop-shadow(0 0 0 rgba(255, 0, 0, 0));
+          }
+          15% {
+              transform: translate(-50%, -60%) scale(1.5);
+              opacity: 1;
+              filter: drop-shadow(0 0 12px rgba(255, 0, 0, 1));
+          }
+          30% {
+              transform: translate(-50%, -100%) scale(1.2) rotate(15deg);
+              opacity: 0.9;
+          }
+          60% {
+              transform: translate(-50%, -160%) scale(1) rotate(-10deg);
+              opacity: 0.8;
+          }
+          80% {
+              transform: translate(-50%, -200%) scale(0.8) rotate(20deg);
+              opacity: 0.6;
+              filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.6));
+          }
+          100% {
+              transform: translate(-50%, -250%) scale(0.6) rotate(30deg);
+              opacity: 0;
+              filter: drop-shadow(0 0 0 rgba(255, 0, 0, 0));
+          }
+      }
 
       /* 优惠券样式 */
       .coupon-card {
@@ -1714,6 +1759,55 @@
     const cancelLogoutBtn = document.getElementById('cancel-logout');
     const confirmLogoutBtn = document.getElementById('confirm-logout');
     
+    // 创建点击爱心特效
+    function createClickHeart(x, y) {
+      // 创建6-10个爱心
+      const heartCount = Math.floor(Math.random() * 5) + 6;
+      
+      for (let i = 0; i < heartCount; i++) {
+        // 创建随机爱心颜色和大小
+        const colors = ['#FF0000', '#FF2D6D', '#FF1493', '#FF007F', '#FF0040'];
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        const randomSize = Math.floor(Math.random() * 15) + 25; // 25px - 40px
+        const randomRotation = Math.floor(Math.random() * 120) - 60; // -60deg to 60deg
+        
+        // 随机位置偏移 - 更大范围
+        const offsetX = Math.floor(Math.random() * 80) - 40; // -40px to +40px
+        const offsetY = Math.floor(Math.random() * 80) - 40; // -40px to +40px
+        
+        // 创建爱心元素
+        const heart = document.createElement('div');
+        heart.className = 'click-heart';
+        
+        // 随机选择爱心样式
+        const heartSymbols = ['❤', '💖', '💗', '💓', '💘', '💕', '💞', '💝'];
+        heart.innerHTML = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+        
+        heart.style.left = `${x + offsetX}px`;
+        heart.style.top = `${y + offsetY}px`;
+        heart.style.color = randomColor;
+        heart.style.fontSize = `${randomSize}px`;
+        heart.style.transform = `translate(-50%, -50%) rotate(${randomRotation}deg)`;
+        
+        // 随机动画时长
+        const animationDuration = (Math.random() * 0.7 + 1.5).toFixed(1); // 1.5s - 2.2s
+        heart.style.animationDuration = `${animationDuration}s`;
+        
+        // 随机不透明度和混合模式，让效果更突出
+        heart.style.opacity = (Math.random() * 0.2 + 0.8).toFixed(1); // 0.8-1.0
+        const blendModes = ['normal', 'multiply', 'screen'];
+        heart.style.mixBlendMode = blendModes[Math.floor(Math.random() * blendModes.length)];
+        
+        // 添加到页面
+        document.body.appendChild(heart);
+        
+        // 动画结束后移除
+        setTimeout(() => {
+          heart.remove();
+        }, parseFloat(animationDuration) * 1000);
+      }
+    }
+    
     // 初始化
     document.addEventListener('DOMContentLoaded', () => {
       // 设置当前时间
@@ -1733,6 +1827,11 @@
         if (e.key === 'Enter') {
           verifyHusbandName();
         }
+      });
+      
+      // 添加点击爱心特效
+      document.addEventListener('click', function(e) {
+        createClickHeart(e.clientX, e.clientY);
       });
       
       // 绑定关闭登录成功模态框事件
