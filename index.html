@@ -330,6 +330,45 @@
           text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
           z-index: 2;
       }
+      
+      /* 敲头动画效果 */
+      @keyframes knockHeadAnimation {
+          0% { transform: scale(1.5) rotate(0deg); }
+          25% { transform: scale(1.8) rotate(-15deg); }
+          50% { transform: scale(1.5) rotate(0deg); }
+          75% { transform: scale(1.8) rotate(15deg); }
+          100% { transform: scale(1.5) rotate(0deg); }
+      }
+      
+      .knock-head-animation {
+          animation: knockHeadAnimation 0.5s infinite;
+          text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+      }
+      
+      /* 闪烁背景效果 */
+      @keyframes flashBackground {
+          0% { background-color: rgba(0, 0, 0, 1); }
+          50% { background-color: rgba(139, 0, 0, 0.8); }
+          100% { background-color: rgba(0, 0, 0, 1); }
+      }
+      
+      .flash-background {
+          animation: flashBackground 0.8s infinite;
+      }
+      
+      /* 认可动画效果 */
+      @keyframes approveAnimation {
+          0% { transform: scale(1.5) rotate(0deg); }
+          25% { transform: scale(1.7) rotate(10deg); }
+          50% { transform: scale(1.5) rotate(0deg); }
+          75% { transform: scale(1.7) rotate(-10deg); }
+          100% { transform: scale(1.5) rotate(0deg); }
+      }
+      
+      .approve-animation {
+          animation: approveAnimation 2s infinite;
+          text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+      }
 
       /* 优惠券样式 */
       .coupon-card {
@@ -1234,6 +1273,46 @@
     </button>
   </div>
   
+  <!-- 非王冬用户验证模态框 -->
+  <div id="husbandVerifyModal" class="fixed inset-0 bg-black bg-opacity-70 hidden z-50 flex items-center justify-center">
+    <div class="bg-white rounded-xl p-6 max-w-md w-full card-shadow fade-in">
+      <h3 class="text-xl font-bold text-center mb-4">不是王冬本人哦</h3>
+      <p class="text-gray-600 mb-4 text-center">如果继续使用，请告诉我<span class="text-primary font-bold">王冬老公姓什么</span></p>
+      <div class="mb-4">
+        <input type="text" id="husbandName" placeholder="请输入姓氏" 
+          class="w-full py-3 px-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all">
+      </div>
+      <div class="flex space-x-3">
+        <button id="cancelVerifyBtn" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-3 px-4 rounded-lg transition-all duration-300 ease-in-out btn-hover">
+          取消
+        </button>
+        <button id="confirmVerifyBtn" class="flex-1 bg-primary hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg transition-all duration-300 ease-in-out btn-hover">
+          确认
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 验证失败特效 -->
+  <div id="notRecognizeEffect" class="fixed inset-0 bg-black hidden z-[60] flex flex-col items-center justify-center">
+    <div id="knockEmoji" class="text-9xl mb-6 transform scale-150">🤦</div>
+    <p class="text-white text-4xl font-bold mb-8 text-center">臭小子，你谁啊？</p>
+    <button onclick="closeNotRecognizeEffect()" class="bg-white text-primary px-6 py-2 rounded-full hover:bg-opacity-90 text-lg">
+      关闭
+    </button>
+  </div>
+  
+  <!-- 验证成功特效 -->
+  <div id="verifySuccessEffect" class="fixed inset-0 bg-gradient-to-br from-primary/80 to-secondary/80 hidden z-[60] flex flex-col items-center justify-center">
+    <div id="approveEmoji" class="text-9xl mb-6 transform scale-150">😉👍</div>
+    <p class="text-white text-4xl font-bold mb-8 text-center">看在你知道她老公的份上，给你看看吧</p>
+    <div class="animate-pulse">
+      <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto">
+        <i class="fa fa-arrow-down text-3xl text-primary"></i>
+      </div>
+    </div>
+  </div>
+  
   <!-- 按摩计时器模态框 -->
   <div id="massageTimerModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
     <div class="bg-white rounded-lg p-6 w-96 max-w-full mx-4 text-center relative">
@@ -1645,6 +1724,17 @@
       // 绑定登录表单提交事件
       loginForm.addEventListener('submit', handleLogin);
       
+      // 绑定老公验证模态框按钮事件
+      document.getElementById('confirmVerifyBtn').addEventListener('click', verifyHusbandName);
+      document.getElementById('cancelVerifyBtn').addEventListener('click', closeHusbandVerifyModal);
+      
+      // 添加回车键提交验证
+      document.getElementById('husbandName').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          verifyHusbandName();
+        }
+      });
+      
       // 绑定关闭登录成功模态框事件
       closeLoginModalBtn.addEventListener('click', () => {
         loginSuccessModal.classList.add('hidden');
@@ -2014,10 +2104,83 @@
         loginPage.classList.add('hidden');
         showLoveEffect();
       } else if (name && phone) {
-        showToast('姓名或手机号错误');
+        // 显示老公验证模态框
+        document.getElementById('husbandVerifyModal').classList.remove('hidden');
+        document.getElementById('husbandName').value = ''; // 清空输入
+        document.getElementById('husbandName').focus();
       } else {
         showToast('姓名或手机号不能为空');
       }
+    }
+    
+    // 验证王冬老公姓氏
+    function verifyHusbandName() {
+      const husbandSurname = document.getElementById('husbandName').value.trim();
+      
+      if (husbandSurname === '缪') {
+        // 验证成功，关闭模态框并显示成功特效
+        document.getElementById('husbandVerifyModal').classList.add('hidden');
+        
+        // 保存登录用户信息（使用访客身份）
+        loggedInUser = { name: '访客', phone: '访客' };
+        isLoggedIn = true;
+        
+        // 显示认可特效
+        showVerifySuccessEffect();
+      } else {
+        // 验证失败，关闭模态框并显示不认识特效
+        document.getElementById('husbandVerifyModal').classList.add('hidden');
+        showNotRecognizeEffect();
+      }
+    }
+    
+    // 显示验证成功特效
+    function showVerifySuccessEffect() {
+      const successEffect = document.getElementById('verifySuccessEffect');
+      successEffect.classList.remove('hidden');
+      
+      // 让认可表情动起来
+      const approveEmoji = document.getElementById('approveEmoji');
+      approveEmoji.classList.add('approve-animation');
+      
+      // 3秒后自动进入主页
+      setTimeout(() => {
+        successEffect.classList.add('hidden');
+        approveEmoji.classList.remove('approve-animation');
+        
+        // 登录成功，显示主页
+        loginPage.classList.add('hidden');
+        mainApp.classList.remove('hidden');
+        renderFoodList();
+      }, 3000);
+    }
+    
+    // 关闭老公验证模态框
+    function closeHusbandVerifyModal() {
+      document.getElementById('husbandVerifyModal').classList.add('hidden');
+    }
+    
+    // 显示验证失败特效
+    function showNotRecognizeEffect() {
+      const notRecognizeEffect = document.getElementById('notRecognizeEffect');
+      notRecognizeEffect.classList.remove('hidden');
+      
+      // 让敲头表情闪动
+      const knockEmoji = document.getElementById('knockEmoji');
+      knockEmoji.classList.add('knock-head-animation');
+      
+      // 添加背景闪动效果
+      notRecognizeEffect.classList.add('flash-background');
+    }
+    
+    // 关闭验证失败特效
+    function closeNotRecognizeEffect() {
+      const notRecognizeEffect = document.getElementById('notRecognizeEffect');
+      notRecognizeEffect.classList.add('hidden');
+      notRecognizeEffect.classList.remove('flash-background');
+      
+      const knockEmoji = document.getElementById('knockEmoji');
+      knockEmoji.classList.remove('knock-head-animation');
     }
     
     // 显示登录成功特效
